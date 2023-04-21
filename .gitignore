@@ -31,3 +31,12 @@ google-services.json
 
 # Android Profiling
 *.hprof
+
+# Google Firebase API Key
+google-services.json
+
+# MacOS .DS_Store Files
+.DS_Store
+
+# DrawIO Backup Files
+*.drawio.bkp
