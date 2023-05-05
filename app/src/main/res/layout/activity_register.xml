@@ -3,6 +3,143 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegisterActivity">
+    tools:context=".gui.activity.RegisterActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="50dp">
+
+        <TextView
+            android:id="@+id/activity_register_info_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/activity_register_info_textview" />
+
+        <EditText
+            android:id="@+id/activity_register_first_name_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="name"
+            android:ems="10"
+            android:hint="@string/activity_register_first_name_edittext"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/activity_register_last_name_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="name"
+            android:ems="10"
+            android:hint="@string/activity_register_last_name_edittext"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/activity_register_email_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="emailAddress"
+            android:ems="10"
+            android:hint="@string/activity_register_email_edittext"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/activity_register_phone_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="phone"
+            android:ems="10"
+            android:hint="@string/activity_register_phone_edittext"
+            android:inputType="phone" />
+
+        <EditText
+            android:id="@+id/activity_register_address_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="postalAddress"
+            android:ems="10"
+            android:hint="@string/activity_register_address_edittext"
+            android:inputType="textPostalAddress" />
+
+        <EditText
+            android:id="@+id/activity_register_city_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="postalAddress"
+            android:ems="10"
+            android:hint="@string/activity_register_city_edittext"
+            android:inputType="textPostalAddress" />
+
+        <EditText
+            android:id="@+id/activity_register_state_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="postalAddress"
+            android:ems="10"
+            android:hint="@string/activity_register_state_edittext"
+            android:inputType="textPostalAddress" />
+
+        <EditText
+            android:id="@+id/activity_register_zip_code_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="postalCode"
+            android:ems="10"
+            android:hint="@string/activity_register_zip_code_edittext"
+            android:inputType="textPostalAddress" />
+
+        <EditText
+            android:id="@+id/activity_register_username_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="username"
+            android:ems="10"
+            android:hint="@string/username_edittext"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/activity_register_email_confirm_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="emailAddress"
+            android:ems="10"
+            android:hint="@string/username_confirm_edittext"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/activity_register_password_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="password"
+            android:ems="10"
+            android:hint="@string/password_edittext"
+            android:inputType="textPassword" />
+
+        <EditText
+            android:id="@+id/activity_register_confirm_password_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="password"
+            android:ems="10"
+            android:hint="@string/password_confirm_edittext"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/activity_register_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/activity_register_button" />
+
+        <TextView
+            android:id="@+id/activity_register_switch_to_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/activity_register_switch_to_login">
+
+        </TextView>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

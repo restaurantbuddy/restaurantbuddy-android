@@ -1,12 +1,21 @@
 <resources>
     <string name="app_name">RestaurantBuddy Android</string>
-    <string name="title_activity_login">LoginActivity</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
+    <string name="username_edittext">Username</string>
+    <string name="username_confirm_edittext">Confirm Username</string>
+    <string name="password_edittext">Password</string>
+    <string name="password_confirm_edittext">Confirm Password</string>
+    <string name="activity_login_button">Login</string>
+    <string name="activity_register_button">Register</string>
+    <string name="activity_login_intro_textview">Enter a username and password to login:</string>
+    <string name="activity_register_info_textview">Please complete the following fields to register:</string>
+    <string name="activity_login_switch_to_register">Not yet a user? Click here to register.</string>
+    <string name="activity_register_switch_to_login">Already a user? Click here to login.</string>
+    <string name="activity_register_first_name_edittext">First Name</string>
+    <string name="activity_register_last_name_edittext">Last Name</string>
+    <string name="activity_register_email_edittext">Email Address</string>
+    <string name="activity_register_phone_edittext">Phone Number</string>
+    <string name="activity_register_address_edittext">Postal Address</string>
+    <string name="activity_register_city_edittext">City</string>
+    <string name="activity_register_state_edittext">State</string>
+    <string name="activity_register_zip_code_edittext">Zip Code</string>
 </resources>
