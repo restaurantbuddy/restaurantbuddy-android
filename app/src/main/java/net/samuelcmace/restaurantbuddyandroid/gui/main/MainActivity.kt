@@ -1,13 +1,13 @@
-package net.samuelcmace.restaurantbuddyandroid.gui.activity
+package net.samuelcmace.restaurantbuddyandroid.gui.main
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.room.Room
 import kotlinx.coroutines.launch
 import net.samuelcmace.restaurantbuddyandroid.R
-import net.samuelcmace.restaurantbuddyandroid.gui.database.DatabaseManager
-import net.samuelcmace.restaurantbuddyandroid.gui.database.dao.SessionDao
+import net.samuelcmace.restaurantbuddyandroid.database.DatabaseManager
+import net.samuelcmace.restaurantbuddyandroid.database.dao.SessionDao
 
 class MainActivity : AppCompatActivity() {
 

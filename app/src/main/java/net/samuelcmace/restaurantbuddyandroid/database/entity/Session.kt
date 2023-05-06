@@ -1,4 +1,4 @@
-package net.samuelcmace.restaurantbuddyandroid.gui.database.data
+package net.samuelcmace.restaurantbuddyandroid.database.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

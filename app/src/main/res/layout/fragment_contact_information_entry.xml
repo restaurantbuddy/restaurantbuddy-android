@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".gui.auth.register.ContactInformationEntryFragment">
+
+    <EditText
+        android:id="@+id/activity_register_first_name_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="name"
+        android:ems="10"
+        android:hint="@string/activity_register_first_name_edittext"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/activity_register_last_name_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="name"
+        android:ems="10"
+        android:hint="@string/activity_register_last_name_edittext"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/activity_register_email_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="emailAddress"
+        android:ems="10"
+        android:hint="@string/activity_register_email_edittext"
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/activity_register_phone_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="phone"
+        android:ems="10"
+        android:hint="@string/activity_register_phone_edittext"
+        android:inputType="phone" />
+
+</LinearLayout>

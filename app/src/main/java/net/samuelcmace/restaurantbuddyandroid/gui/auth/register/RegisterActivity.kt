@@ -1,4 +1,4 @@
-package net.samuelcmace.restaurantbuddyandroid.gui.activity
+package net.samuelcmace.restaurantbuddyandroid.gui.auth.register
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,8 +13,9 @@ import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import net.samuelcmace.restaurantbuddyandroid.R
-import net.samuelcmace.restaurantbuddyandroid.gui.database.DatabaseManager
-import net.samuelcmace.restaurantbuddyandroid.gui.database.dao.SessionDao
+import net.samuelcmace.restaurantbuddyandroid.database.DatabaseManager
+import net.samuelcmace.restaurantbuddyandroid.database.dao.SessionDao
+import net.samuelcmace.restaurantbuddyandroid.gui.auth.LoginActivity
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -41,11 +42,11 @@ class RegisterActivity : AppCompatActivity() {
         ).build()
         this.mSessionDao = this.mDatabaseManager.sessionDao()
 
-        this.mEmailEditText = findViewById(R.id.activity_register_username_edittext)
-        this.mEmailConfirmEditText = findViewById(R.id.activity_register_email_confirm_edittext)
-
-        this.mPasswordEditText = findViewById(R.id.activity_register_password_edittext)
-        this.mPasswordConfirmEditText = findViewById(R.id.activity_register_confirm_password_edittext)
+//        this.mEmailEditText = findViewById(R.id.activity_register_username_edittext)
+//        this.mEmailConfirmEditText = findViewById(R.id.activity_register_username_confirm_edittext)
+//
+//        this.mPasswordEditText = findViewById(R.id.activity_register_password_edittext)
+//        this.mPasswordConfirmEditText = findViewById(R.id.activity_register_confirm_password_edittext)
 
         this.mRegisterButton = findViewById(R.id.activity_register_button)
         this.mSwitchToLoginButton = findViewById(R.id.activity_register_switch_to_login)

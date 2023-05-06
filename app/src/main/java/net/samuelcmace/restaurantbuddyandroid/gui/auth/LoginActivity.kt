@@ -1,4 +1,4 @@
-package net.samuelcmace.restaurantbuddyandroid.gui.activity
+package net.samuelcmace.restaurantbuddyandroid.gui.auth
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,8 +8,9 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
 import net.samuelcmace.restaurantbuddyandroid.R
-import net.samuelcmace.restaurantbuddyandroid.gui.database.DatabaseManager
-import net.samuelcmace.restaurantbuddyandroid.gui.database.dao.SessionDao
+import net.samuelcmace.restaurantbuddyandroid.database.DatabaseManager
+import net.samuelcmace.restaurantbuddyandroid.database.dao.SessionDao
+import net.samuelcmace.restaurantbuddyandroid.gui.auth.register.RegisterActivity
 
 class LoginActivity : AppCompatActivity() {
 

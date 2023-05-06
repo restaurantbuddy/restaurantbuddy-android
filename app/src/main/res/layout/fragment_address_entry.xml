@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".gui.auth.register.AddressEntryFragment">
+
+    <EditText
+        android:id="@+id/activity_register_address_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="postalAddress"
+        android:ems="10"
+        android:hint="@string/activity_register_address_edittext"
+        android:inputType="textPostalAddress" />
+
+    <EditText
+        android:id="@+id/activity_register_city_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="postalAddress"
+        android:ems="10"
+        android:hint="@string/activity_register_city_edittext"
+        android:inputType="textPostalAddress" />
+
+    <EditText
+        android:id="@+id/activity_register_state_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="postalAddress"
+        android:ems="10"
+        android:hint="@string/activity_register_state_edittext"
+        android:inputType="textPostalAddress" />
+
+    <EditText
+        android:id="@+id/activity_register_zip_code_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="postalCode"
+        android:ems="10"
+        android:hint="@string/activity_register_zip_code_edittext"
+        android:inputType="textPostalAddress" />
+
+</LinearLayout>

@@ -1,9 +1,9 @@
-package net.samuelcmace.restaurantbuddyandroid.gui.database.dao
+package net.samuelcmace.restaurantbuddyandroid.database.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import net.samuelcmace.restaurantbuddyandroid.gui.database.data.Session
+import net.samuelcmace.restaurantbuddyandroid.database.entity.Session
 
 @Dao
 interface SessionDao {
