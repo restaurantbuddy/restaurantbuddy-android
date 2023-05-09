@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".gui.auth.register.RegisterActivity">
+    tools:context=".gui.auth.RegisterActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,23 +18,32 @@
             android:layout_height="wrap_content"
             android:text="@string/activity_register_info_textview" />
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragment_contact_information_entry"
-            android:name="net.samuelcmace.restaurantbuddyandroid.gui.auth.register.ContactInformationEntryFragment"
+        <FrameLayout
+            android:id="@+id/fragment_information_entry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragment_address_entry"
-            android:name="net.samuelcmace.restaurantbuddyandroid.gui.auth.register.AddressEntryFragment"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragment_username_password"
-            android:name="net.samuelcmace.restaurantbuddyandroid.gui.auth.register.UsernamePasswordFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/btPrevious"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:text="Previous" />
+
+            <Button
+                android:id="@+id/btNext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="25dp"
+                android:text="Next" />
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/activity_register_button"

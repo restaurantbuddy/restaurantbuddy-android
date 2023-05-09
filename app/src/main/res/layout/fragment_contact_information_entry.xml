@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".gui.auth.register.ContactInformationEntryFragment">
+    tools:context=".gui.auth.ContactInformationEntryFragment">
 
     <EditText
         android:id="@+id/activity_register_first_name_edittext"

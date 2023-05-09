@@ -16,7 +16,7 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".gui.auth.register.RegisterActivity"
+            android:name=".gui.auth.RegisterActivity"
             android:exported="false" />
         <activity
             android:name=".gui.auth.LoginActivity"

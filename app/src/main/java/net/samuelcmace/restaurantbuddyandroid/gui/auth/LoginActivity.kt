@@ -10,7 +10,6 @@ import androidx.room.Room
 import net.samuelcmace.restaurantbuddyandroid.R
 import net.samuelcmace.restaurantbuddyandroid.database.DatabaseManager
 import net.samuelcmace.restaurantbuddyandroid.database.dao.SessionDao
-import net.samuelcmace.restaurantbuddyandroid.gui.auth.register.RegisterActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -42,9 +41,6 @@ class LoginActivity : AppCompatActivity() {
         this.mSwitchToRegister = findViewById(R.id.activity_login_switch_to_register)
 
         this.mLoginButton.setOnClickListener {
-
-            val email = this.mUsernameTextEdit.text.toString()
-            val password = this.mPasswordEditText.text.toString()
 
         }
 
