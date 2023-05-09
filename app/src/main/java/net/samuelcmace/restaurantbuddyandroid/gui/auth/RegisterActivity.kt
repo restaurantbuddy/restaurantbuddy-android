@@ -45,7 +45,6 @@ class RegisterActivity : AppCompatActivity() {
         this.mFragmentSet[1] = ContactInformationEntryFragment()
         this.mFragmentSet[2] = AddressEntryFragment()
         this.mFragmentSet[3] = UsernamePasswordEntryFragment()
-        switchFragment(1)
 
         this.mPreviousButton = findViewById(R.id.btPrevious)
         this.mNextButton = findViewById(R.id.btNext)
@@ -72,6 +71,7 @@ class RegisterActivity : AppCompatActivity() {
             this.finish()
         }
 
+        switchFragment(1)
     }
 
     private fun switchFragment(newFragmentIndex: Int) {
@@ -81,6 +81,18 @@ class RegisterActivity : AppCompatActivity() {
                 addToBackStack(null)
             }
             this.mCurrentFragmentIndex = newFragmentIndex
+
+            if (newFragmentIndex == 1) {
+                this.mPreviousButton.isEnabled = false
+            } else if (newFragmentIndex == 3) {
+                this.mNextButton.text = "Signup"
+            } else {
+                this.mPreviousButton.isEnabled = true
+                this.mNextButton.text = getString(R.string.next)
+            }
+
+        } else if (newFragmentIndex == 4) {
+            register()
         } else {
             Toast.makeText(this, "Error: You cannot go beyond the scope of the fragments!", Toast.LENGTH_SHORT).show()
         }
@@ -88,7 +100,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun register() {
         val queue = Volley.newRequestQueue(this)
-        val url = "http://192.168.4.43:8888/api/v1/about/status"
+        val url = "http://10.0.2.2:8888/api/v1/about/status"
 
         val request = JsonObjectRequest(Request.Method.GET, url, null,
             {
