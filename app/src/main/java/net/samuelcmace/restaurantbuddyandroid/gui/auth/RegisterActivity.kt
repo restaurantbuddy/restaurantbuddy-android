@@ -16,11 +16,12 @@ import com.android.volley.toolbox.Volley
 import net.samuelcmace.restaurantbuddyandroid.R
 import net.samuelcmace.restaurantbuddyandroid.database.DatabaseManager
 import net.samuelcmace.restaurantbuddyandroid.database.dao.SessionDao
+import net.samuelcmace.restaurantbuddyandroid.gui.auth.fragment.AddressEntryFragment
+import net.samuelcmace.restaurantbuddyandroid.gui.auth.fragment.ContactInformationEntryFragment
+import net.samuelcmace.restaurantbuddyandroid.gui.auth.fragment.UsernamePasswordEntryFragment
+import net.samuelcmace.restaurantbuddyandroid.gui.auth.fragment.Verifiable
 
 class RegisterActivity : AppCompatActivity() {
-
-    private lateinit var mRegisterButton: Button
-    private lateinit var mSwitchToLoginButton: TextView
 
     private lateinit var mDatabaseManager: DatabaseManager
     private lateinit var mSessionDao: SessionDao
@@ -30,6 +31,8 @@ class RegisterActivity : AppCompatActivity() {
 
     private lateinit var mPreviousButton: Button
     private lateinit var mNextButton: Button
+
+    private lateinit var mSwitchToLoginButton: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -59,42 +62,60 @@ class RegisterActivity : AppCompatActivity() {
             switchFragment(this.mCurrentFragmentIndex + 1)
         }
 
-        this.mRegisterButton = findViewById(R.id.activity_register_button)
         this.mSwitchToLoginButton = findViewById(R.id.activity_register_switch_to_login)
-
-        this.mRegisterButton.setOnClickListener {
-
-        }
 
         this.mSwitchToLoginButton.setOnClickListener {
             this.startActivity(Intent(this, LoginActivity::class.java))
             this.finish()
         }
 
-        switchFragment(1)
+        updateFragmentGUI(1)
     }
 
     private fun switchFragment(newFragmentIndex: Int) {
-        if (newFragmentIndex in 1..3) {
-            supportFragmentManager.commit {
-                replace(R.id.fragment_information_entry, mFragmentSet[newFragmentIndex]!!)
-                addToBackStack(null)
-            }
-            this.mCurrentFragmentIndex = newFragmentIndex
+        try {
+            if (newFragmentIndex > this.mCurrentFragmentIndex)
+                (this.mFragmentSet[this.mCurrentFragmentIndex] as Verifiable).verifyInformation()
 
-            if (newFragmentIndex == 1) {
+            when (newFragmentIndex) {
+                1, 2, 3 -> {
+                    updateFragmentGUI(newFragmentIndex)
+                }
+
+                4 -> {
+                    register()
+                }
+
+                else -> {
+                    Toast.makeText(this, "Error: You cannot go beyond the scope of the fragments!", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+        } catch (e: Exception) {
+            Toast.makeText(this, e.localizedMessage, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun updateFragmentGUI(newFragmentIndex: Int) {
+        supportFragmentManager.commit {
+            replace(R.id.fragment_information_entry, mFragmentSet[newFragmentIndex]!!)
+            addToBackStack(null)
+        }
+        this.mCurrentFragmentIndex = newFragmentIndex
+
+        when (newFragmentIndex) {
+            1 -> {
                 this.mPreviousButton.isEnabled = false
-            } else if (newFragmentIndex == 3) {
-                this.mNextButton.text = "Signup"
-            } else {
+            }
+
+            3 -> {
+                this.mNextButton.text = getString(R.string.signup)
+            }
+
+            else -> {
                 this.mPreviousButton.isEnabled = true
                 this.mNextButton.text = getString(R.string.next)
             }
-
-        } else if (newFragmentIndex == 4) {
-            register()
-        } else {
-            Toast.makeText(this, "Error: You cannot go beyond the scope of the fragments!", Toast.LENGTH_SHORT).show()
         }
     }
 

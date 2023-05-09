@@ -4,42 +4,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".gui.auth.AddressEntryFragment">
+    tools:context=".gui.auth.fragment.AddressEntryFragment">
 
     <EditText
-        android:id="@+id/activity_register_address_edittext"
+        android:id="@+id/etPostalAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:autofillHints="postalAddress"
         android:ems="10"
-        android:hint="@string/activity_register_address_edittext"
+        android:hint="@string/etPostalAddress"
         android:inputType="textPostalAddress" />
 
     <EditText
-        android:id="@+id/activity_register_city_edittext"
+        android:id="@+id/etCity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:autofillHints="postalAddress"
         android:ems="10"
-        android:hint="@string/activity_register_city_edittext"
+        android:hint="@string/etCity"
         android:inputType="textPostalAddress" />
 
     <EditText
-        android:id="@+id/activity_register_state_edittext"
+        android:id="@+id/etState"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:autofillHints="postalAddress"
         android:ems="10"
-        android:hint="@string/activity_register_state_edittext"
+        android:hint="@string/etState"
         android:inputType="textPostalAddress" />
 
     <EditText
-        android:id="@+id/activity_register_zip_code_edittext"
+        android:id="@+id/etZip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:autofillHints="postalCode"
         android:ems="10"
-        android:hint="@string/activity_register_zip_code_edittext"
+        android:hint="@string/etZip"
         android:inputType="textPostalAddress" />
 
 </LinearLayout>

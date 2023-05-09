@@ -1,23 +1,23 @@
 <resources>
     <string name="app_name">RestaurantBuddy Android</string>
     <string name="username_edittext">Username</string>
-    <string name="username_confirm_edittext">Confirm Username</string>
-    <string name="password_edittext">Password</string>
-    <string name="password_confirm_edittext">Confirm Password</string>
+    <string name="etUsername">Confirm Username</string>
+    <string name="etPassword">Password</string>
+    <string name="etConfirmPassword">Confirm Password</string>
     <string name="activity_login_button">Login</string>
     <string name="activity_register_button">Register</string>
     <string name="activity_login_intro_textview">Enter a username and password to login:</string>
     <string name="activity_register_info_textview">Please complete the following fields to register:</string>
     <string name="activity_login_switch_to_register">Not yet a user? Click here to register.</string>
     <string name="activity_register_switch_to_login">Already a user? Click here to login.</string>
-    <string name="activity_register_first_name_edittext">First Name</string>
-    <string name="activity_register_last_name_edittext">Last Name</string>
-    <string name="activity_register_email_edittext">Email Address</string>
-    <string name="activity_register_phone_edittext">Phone Number</string>
-    <string name="activity_register_address_edittext">Postal Address</string>
-    <string name="activity_register_city_edittext">City</string>
-    <string name="activity_register_state_edittext">State</string>
-    <string name="activity_register_zip_code_edittext">Zip Code</string>
+    <string name="etFirstName">First Name</string>
+    <string name="etLastName">Last Name</string>
+    <string name="etEmailAddress">Email Address</string>
+    <string name="etPhoneNumber">Phone Number</string>
+    <string name="etPostalAddress">Postal Address</string>
+    <string name="etCity">City</string>
+    <string name="etState">State</string>
+    <string name="etZip">Zip Code</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -38,4 +38,6 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="etConfirmUsername">Confirm Username</string>
+    <string name="signup">Signup</string>
 </resources>
