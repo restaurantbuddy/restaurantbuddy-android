@@ -6,6 +6,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import net.samuelcmace.restaurantbuddyandroid.AppConfig
@@ -14,10 +16,9 @@ import net.samuelcmace.restaurantbuddyandroid.database.entity.Item
 import net.samuelcmace.restaurantbuddyandroid.gui.auth.LoginActivity
 import net.samuelcmace.restaurantbuddyandroid.gui.main.FeedbackActivity
 import net.samuelcmace.restaurantbuddyandroid.gui.main.cart.CartActivity
-import net.samuelcmace.restaurantbuddyandroid.gui.main.model.ItemCollection
+import net.samuelcmace.restaurantbuddyandroid.gui.main.jsonmodel.ItemModelCollection
 import net.samuelcmace.restaurantbuddyandroid.service.AuthenticationService
 import net.samuelcmace.restaurantbuddyandroid.service.CustomerService
-import org.json.JSONObject
 
 /**
  * Activity representing the menu that the restaurant offers.
@@ -35,6 +36,16 @@ class MenuActivity : AppCompatActivity() {
     private lateinit var mCustomerService: CustomerService
 
     /**
+     * Instance of the RecyclerView used by the activity.
+     */
+    private lateinit var rvMenu: RecyclerView
+
+    /**
+     * Instance of the MenuItemAdapter used by the activity.
+     */
+    private lateinit var mMenuItemListAdapter: MenuItemAdapter
+
+    /**
      * Method called by the Android API after the UI has been drawn.
      */
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +55,10 @@ class MenuActivity : AppCompatActivity() {
 
         this.mAuthenticationService = AuthenticationService(this)
         this.mCustomerService = CustomerService(this)
+
+        this.rvMenu = findViewById(R.id.rvMenu)
+        this.rvMenu.layoutManager = LinearLayoutManager(this)
+        this.mMenuItemListAdapter = MenuItemAdapter(this)
 
         // First, fetch the active token to be used on the activity if it does
         // not already exist.
@@ -63,11 +78,13 @@ class MenuActivity : AppCompatActivity() {
      */
     private fun loadMenu() {
         mCustomerService.getMenu({
-            val jsonItems = Json.decodeFromString<ItemCollection>(it.toString())
-            for(item in jsonItems.items)
-            {
-                Toast.makeText(this, item.toString(), Toast.LENGTH_LONG).show()
+            val jsonItems = Json.decodeFromString<ItemModelCollection>(it.toString())
+            val menuItems: ArrayList<Item> = ArrayList()
+            for (item in jsonItems.items) {
+                menuItems.add(item.getDBItem())
             }
+            this.mMenuItemListAdapter.setAllItems(menuItems)
+            this.rvMenu.adapter = this.mMenuItemListAdapter
         }, {
             Toast.makeText(this, it, Toast.LENGTH_LONG).show()
         })

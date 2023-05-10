@@ -69,8 +69,4 @@ class CustomerService(context: Context) : Service(context) {
         mRequestQueue.add(request)
     }
 
-    fun getCart() {
-
-    }
-
 }

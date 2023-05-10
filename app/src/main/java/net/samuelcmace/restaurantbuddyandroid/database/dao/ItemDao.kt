@@ -31,7 +31,7 @@ interface ItemDao {
     suspend fun delete(vararg items: Item)
 
     /**
-     * Method to clear all items from the database (clear the cart).
+     * Method to clear all itemModels from the database (clear the cart).
      */
     @Query("DELETE FROM ITEM")
     suspend fun clear()

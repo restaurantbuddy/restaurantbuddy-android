@@ -25,7 +25,7 @@ data class Session(
 ) {
 
     /**
-     * Method generating the string value of the items in the table.
+     * Method generating the string value of the itemModels in the table.
      * Used mainly for debugging purposes.
      */
     override fun toString() = "id = $id, token = $token"
