@@ -1,6 +1,7 @@
 package net.samuelcmace.restaurantbuddyandroid.database.dao
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import net.samuelcmace.restaurantbuddyandroid.database.entity.Session
@@ -13,5 +14,8 @@ interface SessionDao {
 
     @Insert
     suspend fun insertAll(vararg sessions: Session)
+
+    @Delete
+    suspend fun deleteAll(vararg sessions: Session)
 
 }

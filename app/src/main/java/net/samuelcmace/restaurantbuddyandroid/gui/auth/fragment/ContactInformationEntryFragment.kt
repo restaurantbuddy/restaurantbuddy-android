@@ -24,10 +24,10 @@ class ContactInformationEntryFragment : Fragment(R.layout.fragment_contact_infor
 
     }
 
-    private fun getFirstName() = etFirstName.text.toString()
-    private fun getLastName() = etLastName.text.toString()
-    private fun getEmailAddress() = etEmailAddress.text.toString()
-    private fun getPhoneNumber() = etPhoneNumber.text.toString()
+    fun getFirstName() = etFirstName.text.toString()
+    fun getLastName() = etLastName.text.toString()
+    fun getEmailAddress() = etEmailAddress.text.toString()
+    fun getPhoneNumber() = etPhoneNumber.text.toString()
 
     override fun verifyInformation() {
         if (getFirstName().isEmpty())

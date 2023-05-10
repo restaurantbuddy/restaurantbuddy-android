@@ -24,10 +24,10 @@ class AddressEntryFragment : Fragment(R.layout.fragment_address_entry), Verifiab
 
     }
 
-    private fun getPostalAddress() = this.etPostalAddress.text.toString()
-    private fun getCity() = this.etCity.text.toString()
-    private fun getState() = this.etState.text.toString()
-    private fun getZip() = this.etZip.text.toString()
+    fun getPostalAddress() = this.etPostalAddress.text.toString()
+    fun getCity() = this.etCity.text.toString()
+    fun getState() = this.etState.text.toString()
+    fun getZip() = this.etZip.text.toString()
 
     override fun verifyInformation() {
         if (getPostalAddress().isEmpty())

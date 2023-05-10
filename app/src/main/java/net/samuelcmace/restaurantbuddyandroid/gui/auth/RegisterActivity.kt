@@ -9,10 +9,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
+import androidx.lifecycle.lifecycleScope
 import androidx.room.Room
-import com.android.volley.Request
-import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.Volley
+import kotlinx.coroutines.launch
 import net.samuelcmace.restaurantbuddyandroid.R
 import net.samuelcmace.restaurantbuddyandroid.database.DatabaseManager
 import net.samuelcmace.restaurantbuddyandroid.database.dao.SessionDao
@@ -20,6 +19,8 @@ import net.samuelcmace.restaurantbuddyandroid.gui.auth.fragment.AddressEntryFrag
 import net.samuelcmace.restaurantbuddyandroid.gui.auth.fragment.ContactInformationEntryFragment
 import net.samuelcmace.restaurantbuddyandroid.gui.auth.fragment.UsernamePasswordEntryFragment
 import net.samuelcmace.restaurantbuddyandroid.gui.auth.fragment.Verifiable
+import net.samuelcmace.restaurantbuddyandroid.gui.main.MenuActivity
+import net.samuelcmace.restaurantbuddyandroid.service.AuthenticationService
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -73,26 +74,27 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun switchFragment(newFragmentIndex: Int) {
-        try {
-            if (newFragmentIndex > this.mCurrentFragmentIndex)
-                (this.mFragmentSet[this.mCurrentFragmentIndex] as Verifiable).verifyInformation()
+        if (newFragmentIndex > this.mCurrentFragmentIndex)
+            (this.mFragmentSet[this.mCurrentFragmentIndex] as Verifiable).verifyInformation()
 
-            when (newFragmentIndex) {
-                1, 2, 3 -> {
-                    updateFragmentGUI(newFragmentIndex)
-                }
+        when (newFragmentIndex) {
+            1, 2, 3 -> {
+                updateFragmentGUI(newFragmentIndex)
+            }
 
-                4 -> {
+            4 -> {
+                lifecycleScope.launch {
                     register()
-                }
-
-                else -> {
-                    Toast.makeText(this, "Error: You cannot go beyond the scope of the fragments!", Toast.LENGTH_SHORT)
-                        .show()
+                }.invokeOnCompletion {
+                    startActivity(Intent(this, MenuActivity::class.java))
+                    finish()
                 }
             }
-        } catch (e: Exception) {
-            Toast.makeText(this, e.localizedMessage, Toast.LENGTH_SHORT).show()
+
+            else -> {
+                Toast.makeText(this, "Error: You cannot go beyond the scope of the fragments!", Toast.LENGTH_SHORT)
+                    .show()
+            }
         }
     }
 
@@ -119,21 +121,22 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun register() {
-        val queue = Volley.newRequestQueue(this)
-        val url = "http://10.0.2.2:8888/api/v1/about/status"
+    private suspend fun register() {
+        val authenticationService = AuthenticationService(this)
+        authenticationService.register(
+            (this.mFragmentSet[1] as ContactInformationEntryFragment).getFirstName(),
+            (this.mFragmentSet[1] as ContactInformationEntryFragment).getLastName(),
+            (this.mFragmentSet[1] as ContactInformationEntryFragment).getEmailAddress(),
+            (this.mFragmentSet[1] as ContactInformationEntryFragment).getPhoneNumber(),
 
-        val request = JsonObjectRequest(Request.Method.GET, url, null,
-            {
-                Toast.makeText(applicationContext, it.get("successMessage").toString(), Toast.LENGTH_SHORT).show()
-            },
-            {
-                Toast.makeText(applicationContext, "That didn't work: " + it.localizedMessage, Toast.LENGTH_LONG)
-                    .show()
-                Log.i("RegisterActivity (JSON Request): ", it.localizedMessage!!)
-            })
+            (this.mFragmentSet[2] as AddressEntryFragment).getPostalAddress(),
+            (this.mFragmentSet[2] as AddressEntryFragment).getCity(),
+            (this.mFragmentSet[2] as AddressEntryFragment).getState(),
+            (this.mFragmentSet[2] as AddressEntryFragment).getZip(),
 
-        queue.add(request)
+            (this.mFragmentSet[3] as UsernamePasswordEntryFragment).getUsername(),
+            (this.mFragmentSet[3] as UsernamePasswordEntryFragment).getPassword()
+        )
     }
 
 }

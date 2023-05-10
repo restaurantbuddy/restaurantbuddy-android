@@ -23,10 +23,10 @@ class UsernamePasswordEntryFragment : Fragment(R.layout.fragment_username_passwo
 
     }
 
-    private fun getUsername() = this.etUsername.text.toString()
-    private fun getConfirmUsername() = this.etConfirmUsername.text.toString()
-    private fun getPassword() = this.etPassword.text.toString()
-    private fun getConfirmPassword() = this.etConfirmPassword.text.toString()
+    fun getUsername() = this.etUsername.text.toString()
+    fun getConfirmUsername() = this.etConfirmUsername.text.toString()
+    fun getPassword() = this.etPassword.text.toString()
+    fun getConfirmPassword() = this.etConfirmPassword.text.toString()
 
     override fun verifyInformation() {
         if (getUsername().isEmpty())
