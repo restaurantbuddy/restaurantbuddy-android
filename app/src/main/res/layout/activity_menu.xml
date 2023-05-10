@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".gui.main.MenuActivity">
+    tools:context=".gui.main.menu.MenuActivity">
 
     <TextView
         android:id="@+id/tvSessionUrl"

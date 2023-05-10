@@ -6,13 +6,34 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import net.samuelcmace.restaurantbuddyandroid.R
 
+/**
+ * Fragment representing the contact information entry portion of the registration UI.
+ */
 class ContactInformationEntryFragment : Fragment(R.layout.fragment_contact_information_entry), Verifiable {
 
+    /**
+     * Reference object pointing to the first name entry field on the layout.
+     */
     private lateinit var etFirstName: EditText
+
+    /**
+     * Reference object pointing to the last name entry field on the layout.
+     */
     private lateinit var etLastName: EditText
+
+    /**
+     * Reference object pointing to the email address entry field on the layout.
+     */
     private lateinit var etEmailAddress: EditText
+
+    /**
+     * Reference object pointing to the phone number entry field on the layout.
+     */
     private lateinit var etPhoneNumber: EditText
 
+    /**
+     * Method called by the Android API after the fragment has been drawn.
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)
@@ -24,20 +45,38 @@ class ContactInformationEntryFragment : Fragment(R.layout.fragment_contact_infor
 
     }
 
+    /**
+     * Method to retrieve the string value of the first name field.
+     */
     fun getFirstName() = etFirstName.text.toString()
+
+    /**
+     * Method to retrieve the string value of the last name field.
+     */
     fun getLastName() = etLastName.text.toString()
+
+    /**
+     * Method to retrieve the string value of the email address field.
+     */
     fun getEmailAddress() = etEmailAddress.text.toString()
+
+    /**
+     * Method to retrieve the string value of the phone number field.
+     */
     fun getPhoneNumber() = etPhoneNumber.text.toString()
 
+    /**
+     * Method called to verify the fields contained on the fragment.
+     */
     override fun verifyInformation() {
         if (getFirstName().isEmpty())
-            throw Exception("The first name field cannot be empty!")
+            throw RuntimeException("The first name field cannot be empty!")
         else if (getLastName().isEmpty())
-            throw Exception("The last name field cannot be empty!")
+            throw RuntimeException("The last name field cannot be empty!")
         else if (getEmailAddress().isEmpty())
-            throw Exception("The email address field cannot be empty!")
+            throw RuntimeException("The email address field cannot be empty!")
         else if (getPhoneNumber().isEmpty())
-            throw Exception("The phone number field cannot be empty!")
+            throw RuntimeException("The phone number field cannot be empty!")
     }
 
 }

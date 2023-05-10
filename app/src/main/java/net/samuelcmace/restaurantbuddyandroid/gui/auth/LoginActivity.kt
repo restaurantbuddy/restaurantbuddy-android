@@ -8,19 +8,43 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import net.samuelcmace.restaurantbuddyandroid.R
-import net.samuelcmace.restaurantbuddyandroid.gui.main.MenuActivity
+import net.samuelcmace.restaurantbuddyandroid.gui.main.menu.MenuActivity
 import net.samuelcmace.restaurantbuddyandroid.service.AuthenticationService
 
+/**
+ * Class representing the Login activity for the application.
+ */
 class LoginActivity : AppCompatActivity() {
 
+    /**
+     * Reference object pointing to the username field on the layout.
+     */
     private lateinit var mUsernameTextEdit: EditText
+
+    /**
+     * Reference object pointing to the password field on the layout.
+     */
     private lateinit var mPasswordEditText: EditText
 
+    /**
+     * Reference object pointing to the login button on the layout.
+     */
+
     private lateinit var mLoginButton: Button
+
+    /**
+     * Reference object pointing to the 'Switch to Register' text field on the layout.
+     */
     private lateinit var mSwitchToRegister: TextView
 
+    /**
+     * Instance of the AuthenticationService used by the LoginActivity.
+     */
     private lateinit var mAuthenticationService: AuthenticationService
 
+    /**
+     * Method called by the Android API when the UI is drawn.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -36,11 +60,12 @@ class LoginActivity : AppCompatActivity() {
         this.mSwitchToRegister = findViewById(R.id.activity_login_switch_to_register)
 
         this.mLoginButton.setOnClickListener {
-            mAuthenticationService.login(mUsernameTextEdit.text.toString(), mPasswordEditText.text.toString()) {
+            mAuthenticationService.login(mUsernameTextEdit.text.toString(), mPasswordEditText.text.toString(), {
                 startActivity(Intent(this, MenuActivity::class.java))
                 finish()
-            }
-            Toast.makeText(this, "Logging in... please wait...", Toast.LENGTH_SHORT).show()
+            }, {
+                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+            })
         }
 
         this.mSwitchToRegister.setOnClickListener {

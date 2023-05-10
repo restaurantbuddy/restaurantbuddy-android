@@ -1,7 +1,6 @@
 package net.samuelcmace.restaurantbuddyandroid.service
 
 import android.content.Context
-import android.util.Log
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.JsonObjectRequest
@@ -15,7 +14,12 @@ class AuthenticationService(context: Context) : Service(context) {
 
     private var mRequestQueue: RequestQueue = Volley.newRequestQueue(this.mContext)
 
-    fun login(username: String, password: String, onComplete: () -> Unit) {
+    fun login(
+        username: String,
+        password: String,
+        onSuccess: (message: String) -> Unit,
+        onError: (message: String) -> Unit
+    ) {
         val url = "${AppConfig.getServerUrl()}/auth/authenticate"
 
         val requestObject = JSONObject()
@@ -23,7 +27,7 @@ class AuthenticationService(context: Context) : Service(context) {
         requestObject.put("username", username)
         requestObject.put("password", password)
 
-        val request = authenticate(url, requestObject, onComplete)
+        val request = authenticate(url, requestObject, onSuccess, onError)
 
         this.mRequestQueue.add(request)
     }
@@ -39,7 +43,8 @@ class AuthenticationService(context: Context) : Service(context) {
         zip: String,
         username: String,
         password: String,
-        onComplete: () -> Unit
+        onSuccess: (message: String) -> Unit,
+        onError: (message: String) -> Unit
     ) {
         val queue = Volley.newRequestQueue(this.mContext)
         val url = "${AppConfig.getServerUrl()}/auth/register/customer/new"
@@ -59,37 +64,55 @@ class AuthenticationService(context: Context) : Service(context) {
         requestObject.put("username", username)
         requestObject.put("password", password)
 
-        val request = authenticate(url, requestObject, onComplete)
+        val request = authenticate(url, requestObject, onSuccess, onError)
 
         this.mRequestQueue.add(request)
     }
 
-    fun logout(onComplete: () -> Unit) {
-        AppConfig.authToken?.let {
-            runBlocking {
-                mSessionDao.deleteAll(it)
-            }
-        }
-        AppConfig.authToken = null
-        onComplete()
-    }
-
-    private fun authenticate(requestUrl: String, requestObject: JSONObject, onComplete: () -> Unit) = JsonObjectRequest(
+    private fun authenticate(
+        requestUrl: String,
+        requestObject: JSONObject,
+        onSuccess: (message: String) -> Unit,
+        onError: (message: String) -> Unit
+    ) = JsonObjectRequest(
         Request.Method.POST, requestUrl, requestObject,
         { response ->
             if (!response.get("jwtToken").equals(null)) {
-                val authToken = Session(null, response.get("jwtToken").toString())
-                AppConfig.authToken = authToken
                 runBlocking {
-                    mSessionDao.insertAll(authToken)
+                    val authToken = Session(null, response.get("jwtToken").toString())
+                    AppConfig.authToken = authToken
+                    mSessionDao.insert(authToken)
+                    onSuccess("JWT token fetched successfully!")
                 }
-                onComplete()
             } else {
-                Log.i("AuthenticationService -- JSON Error", response.get("errorMessage").toString())
+                onError("JWT token failed to fetch: " + response.get("errorMessage"))
             }
         },
         {
-            Log.i("AuthenticationService -- HTTP Error", it.toString())
+            onError("HTTP request was not accepted: " + it.localizedMessage)
         })
+
+    fun fetchActiveToken(onSuccess: (message: String) -> Unit, onError: (message: String) -> Unit) {
+        runBlocking {
+            val mSessionTokens: List<Session> = mSessionDao.getAll()
+            if (mSessionTokens.isNotEmpty()) {
+                AppConfig.authToken = mSessionTokens.first()
+                onSuccess("The stored login token was fetched successfully!")
+            } else {
+                onError("There are no stored sessions in the database to fetch!")
+            }
+
+        }
+    }
+
+    fun logout(onSuccess: (message: String) -> Unit) {
+        AppConfig.authToken?.let {
+            runBlocking {
+                mSessionDao.deleteAll()
+            }
+        }
+        AppConfig.authToken = null
+        onSuccess("Logout Successful")
+    }
 
 }

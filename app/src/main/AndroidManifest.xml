@@ -16,10 +16,10 @@
             android:name=".gui.main.FeedbackActivity"
             android:exported="false" />
         <activity
-            android:name=".gui.main.CartActivity"
+            android:name=".gui.main.cart.CartActivity"
             android:exported="false" />
         <activity
-            android:name=".gui.main.MenuActivity"
+            android:name=".gui.main.menu.MenuActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,7 +32,7 @@
             android:exported="true" />
         <activity
             android:name=".gui.auth.LoginActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
     </application>
 
 </manifest>

@@ -6,13 +6,34 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import net.samuelcmace.restaurantbuddyandroid.R
 
+/**
+ * Fragment representing the username and password entry portion of the registration UI.
+ */
 class UsernamePasswordEntryFragment : Fragment(R.layout.fragment_username_password), Verifiable {
 
+    /**
+     * Reference object pointing to the username entry field on the layout.
+     */
     private lateinit var etUsername: EditText
+
+    /**
+     * Reference object pointing to the username confirmation field on the layout.
+     */
     private lateinit var etConfirmUsername: EditText
+
+    /**
+     * Reference object pointing to the password entry field on the layout.
+     */
     private lateinit var etPassword: EditText
+
+    /**
+     * Reference object pointing to the password confirmation field on the layout.
+     */
     private lateinit var etConfirmPassword: EditText
 
+    /**
+     * Method called by the Android API after the fragment has been drawn.
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -23,26 +44,44 @@ class UsernamePasswordEntryFragment : Fragment(R.layout.fragment_username_passwo
 
     }
 
+    /**
+     * Method to retrieve the string value of the username field.
+     */
     fun getUsername() = this.etUsername.text.toString()
+
+    /**
+     * Method to retrieve the string value of the username confirmation field.
+     */
     fun getConfirmUsername() = this.etConfirmUsername.text.toString()
+
+    /**
+     * Method to retrieve the string value of the password field.
+     */
     fun getPassword() = this.etPassword.text.toString()
+
+    /**
+     * Method to retrieve the string value of the password confirmation field.
+     */
     fun getConfirmPassword() = this.etConfirmPassword.text.toString()
 
+    /**
+     * Method called to verify the fields contained on the fragment.
+     */
     override fun verifyInformation() {
         if (getUsername().isEmpty())
-            throw Exception("The username field cannot be empty!")
+            throw RuntimeException("The username field cannot be empty!")
         else if (getConfirmUsername().isEmpty())
-            throw Exception("The username confirmation field cannot be empty!")
+            throw RuntimeException("The username confirmation field cannot be empty!")
         else if (getPassword().isEmpty())
-            throw Exception("The password field cannot be empty!")
+            throw RuntimeException("The password field cannot be empty!")
         else if (getConfirmPassword().isEmpty())
-            throw Exception("The password confirmation field cannot be empty!")
+            throw RuntimeException("The password confirmation field cannot be empty!")
         else if (getUsername() != getConfirmUsername())
-            throw Exception("The username confirmation field does not match!")
+            throw RuntimeException("The username confirmation field does not match!")
         else if (getPassword() != getConfirmPassword())
-            throw Exception("The password confirmation field does not match!")
+            throw RuntimeException("The password confirmation field does not match!")
         else if (getPassword().length < 8)
-            throw Exception("The password must be at-least eight digits in length!")
+            throw RuntimeException("The password must be at-least eight digits in length!")
     }
 
 }
