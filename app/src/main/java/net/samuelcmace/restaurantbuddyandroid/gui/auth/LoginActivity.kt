@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import net.samuelcmace.restaurantbuddyandroid.R
 import net.samuelcmace.restaurantbuddyandroid.gui.main.MenuActivity
@@ -35,9 +36,11 @@ class LoginActivity : AppCompatActivity() {
         this.mSwitchToRegister = findViewById(R.id.activity_login_switch_to_register)
 
         this.mLoginButton.setOnClickListener {
-            mAuthenticationService.login(mUsernameTextEdit.text.toString(), mPasswordEditText.text.toString())
-            startActivity(Intent(this, MenuActivity::class.java))
-            finish()
+            mAuthenticationService.login(mUsernameTextEdit.text.toString(), mPasswordEditText.text.toString()) {
+                startActivity(Intent(this, MenuActivity::class.java))
+                finish()
+            }
+            Toast.makeText(this, "Logging in... please wait...", Toast.LENGTH_SHORT).show()
         }
 
         this.mSwitchToRegister.setOnClickListener {

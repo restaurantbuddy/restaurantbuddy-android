@@ -9,9 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
-import androidx.lifecycle.lifecycleScope
 import androidx.room.Room
-import kotlinx.coroutines.launch
 import net.samuelcmace.restaurantbuddyandroid.R
 import net.samuelcmace.restaurantbuddyandroid.database.DatabaseManager
 import net.samuelcmace.restaurantbuddyandroid.database.dao.SessionDao
@@ -83,9 +81,7 @@ class RegisterActivity : AppCompatActivity() {
             }
 
             4 -> {
-                lifecycleScope.launch {
-                    register()
-                }.invokeOnCompletion {
+                register {
                     startActivity(Intent(this, MenuActivity::class.java))
                     finish()
                 }
@@ -121,7 +117,7 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private suspend fun register() {
+    private fun register(onComplete: () -> Unit) {
         val authenticationService = AuthenticationService(this)
         authenticationService.register(
             (this.mFragmentSet[1] as ContactInformationEntryFragment).getFirstName(),
@@ -135,7 +131,8 @@ class RegisterActivity : AppCompatActivity() {
             (this.mFragmentSet[2] as AddressEntryFragment).getZip(),
 
             (this.mFragmentSet[3] as UsernamePasswordEntryFragment).getUsername(),
-            (this.mFragmentSet[3] as UsernamePasswordEntryFragment).getPassword()
+            (this.mFragmentSet[3] as UsernamePasswordEntryFragment).getPassword(),
+            onComplete
         )
     }
 

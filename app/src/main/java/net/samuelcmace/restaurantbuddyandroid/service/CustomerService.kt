@@ -1,52 +1,66 @@
 package net.samuelcmace.restaurantbuddyandroid.service
 
 import android.content.Context
-import android.util.Log
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import kotlinx.coroutines.runBlocking
 import net.samuelcmace.restaurantbuddyandroid.AppConfig
-import org.json.JSONObject
+import net.samuelcmace.restaurantbuddyandroid.database.entity.Session
 
 class CustomerService(context: Context) : Service(context) {
 
     private val mRequestQueue: RequestQueue = Volley.newRequestQueue(this.mContext)
 
-    suspend fun check(): String {
+    fun testAuthorization(onSuccess: (successMessage: String) -> Unit, onError: (errorMessage: String) -> Unit) {
+        if (AppConfig.authToken == null)
+            fetchActiveToken()
 
-        var response = String()
-        val mSessionTokens = mSessionDao.getAll()
+        val url = "${AppConfig.getServerUrl()}/customer"
 
-        if (mSessionTokens.isNotEmpty()) {
-
-            val url = AppConfig.getServerUrl() + "customer"
-
-            val requestObject = JSONObject()
-
-            val request = object : JsonObjectRequest(
-                Method.POST, url, requestObject,
-                {
-                    if (it.get("errorMessage").equals(null)) {
-                        response = it.get("successMessage").toString()
-                    } else {
-                        Log.i(this.javaClass.toString(), it.get("errorMessage").toString())
-                    }
-                },
-                {
-                    Log.i(this.javaClass.toString(), it.localizedMessage.toString())
+        val request = object : JsonObjectRequest(
+            Method.GET, url, null,
+            {
+                if (it.get("errorMessage").equals(null)) {
+                    onSuccess(it.get("successMessage").toString())
+                } else {
+                    deleteActiveToken()
+                    onError(it.get("errorMessage").toString())
                 }
-            ) {
-                override fun getHeaders(): MutableMap<String, String> {
-                    val headers = HashMap<String, String>()
-                    headers["Authorization"] = AppConfig.authToken?.token.toString()
-                    return super.getHeaders()
-                }
+            },
+            {
+                deleteActiveToken()
+                onError("The API was unauthorized.")
             }
-
-            this.mRequestQueue.add(request)
+        ) {
+            override fun getHeaders(): MutableMap<String, String> {
+                val headers = HashMap<String, String>()
+                headers["Authorization"] = "Bearer ${AppConfig.authToken?.token.toString()}"
+                return headers
+            }
         }
 
-        return response
+        mRequestQueue.add(request)
+
+    }
+
+    private fun fetchActiveToken() {
+        var mSessionTokens: List<Session>
+
+        runBlocking {
+            mSessionTokens = mSessionDao.getAll()
+            if (mSessionTokens.isNotEmpty())
+                AppConfig.authToken = mSessionTokens.first()
+        }
+    }
+
+    private fun deleteActiveToken() {
+        AppConfig.authToken?.let {
+            runBlocking {
+                mSessionDao.deleteAll(it)
+            }
+        }
+        AppConfig.authToken = null
     }
 
 }

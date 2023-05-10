@@ -4,22 +4,20 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.launch
 import net.samuelcmace.restaurantbuddyandroid.AppConfig
 import net.samuelcmace.restaurantbuddyandroid.R
+import net.samuelcmace.restaurantbuddyandroid.gui.auth.LoginActivity
 import net.samuelcmace.restaurantbuddyandroid.service.AuthenticationService
+import net.samuelcmace.restaurantbuddyandroid.service.CustomerService
 
 class MenuActivity : AppCompatActivity() {
 
     private lateinit var tvSessionToken: TextView
     private lateinit var tvSessionUrl: TextView
     private lateinit var tvSessionMessage: TextView
-
-    private lateinit var btLogout: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -29,15 +27,17 @@ class MenuActivity : AppCompatActivity() {
         this.tvSessionToken = findViewById(R.id.tvSessionToken)
         this.tvSessionUrl = findViewById(R.id.tvSessionUrl)
         this.tvSessionMessage = findViewById(R.id.tvSessionMessage)
-        this.btLogout = findViewById(R.id.btLogoutButton)
 
-        tvSessionToken.text = AppConfig.authToken?.token.toString()
-        tvSessionUrl.text = AppConfig.getServerUrl()
+        val customerService = CustomerService(this)
 
-        this.btLogout.setOnClickListener {
+        customerService.testAuthorization({
             tvSessionToken.text = AppConfig.authToken?.token.toString()
             tvSessionUrl.text = AppConfig.getServerUrl()
-        }
+            tvSessionMessage.text = it
+        }, {
+            Toast.makeText(this, "Error: $it", Toast.LENGTH_SHORT).show()
+        })
+        Toast.makeText(this, "Processing request... one moment...", Toast.LENGTH_SHORT).show()
 
     }
 
@@ -66,12 +66,11 @@ class MenuActivity : AppCompatActivity() {
     }
 
     private fun logout() {
-        val authenticationService = AuthenticationService(this)
-        lifecycleScope.launch {
-            authenticationService.logout()
-        }.invokeOnCompletion {
+        AuthenticationService(this).logout {
+            startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
     }
 
 }
+

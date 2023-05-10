@@ -15,7 +15,7 @@ class AuthenticationService(context: Context) : Service(context) {
 
     private var mRequestQueue: RequestQueue = Volley.newRequestQueue(this.mContext)
 
-    fun login(username: String, password: String) {
+    fun login(username: String, password: String, onComplete: () -> Unit) {
         val url = "${AppConfig.getServerUrl()}/auth/authenticate"
 
         val requestObject = JSONObject()
@@ -23,7 +23,7 @@ class AuthenticationService(context: Context) : Service(context) {
         requestObject.put("username", username)
         requestObject.put("password", password)
 
-        val request = authenticate(url, requestObject)
+        val request = authenticate(url, requestObject, onComplete)
 
         this.mRequestQueue.add(request)
     }
@@ -38,7 +38,8 @@ class AuthenticationService(context: Context) : Service(context) {
         state: String,
         zip: String,
         username: String,
-        password: String
+        password: String,
+        onComplete: () -> Unit
     ) {
         val queue = Volley.newRequestQueue(this.mContext)
         val url = "${AppConfig.getServerUrl()}/auth/register/customer/new"
@@ -58,19 +59,22 @@ class AuthenticationService(context: Context) : Service(context) {
         requestObject.put("username", username)
         requestObject.put("password", password)
 
-        val request = authenticate(url, requestObject)
+        val request = authenticate(url, requestObject, onComplete)
 
         this.mRequestQueue.add(request)
     }
 
-    suspend fun logout() {
+    fun logout(onComplete: () -> Unit) {
         AppConfig.authToken?.let {
-            mSessionDao.deleteAll(it)
+            runBlocking {
+                mSessionDao.deleteAll(it)
+            }
         }
         AppConfig.authToken = null
+        onComplete()
     }
 
-    private fun authenticate(requestUrl: String, requestObject: JSONObject) = JsonObjectRequest(
+    private fun authenticate(requestUrl: String, requestObject: JSONObject, onComplete: () -> Unit) = JsonObjectRequest(
         Request.Method.POST, requestUrl, requestObject,
         { response ->
             if (!response.get("jwtToken").equals(null)) {
@@ -79,6 +83,7 @@ class AuthenticationService(context: Context) : Service(context) {
                 runBlocking {
                     mSessionDao.insertAll(authToken)
                 }
+                onComplete()
             } else {
                 Log.i("AuthenticationService -- JSON Error", response.get("errorMessage").toString())
             }
