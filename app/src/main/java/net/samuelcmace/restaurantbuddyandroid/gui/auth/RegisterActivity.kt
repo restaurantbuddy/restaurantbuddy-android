@@ -16,6 +16,7 @@ import net.samuelcmace.restaurantbuddyandroid.gui.auth.fragment.UsernamePassword
 import net.samuelcmace.restaurantbuddyandroid.gui.auth.fragment.Verifiable
 import net.samuelcmace.restaurantbuddyandroid.gui.main.menu.MenuActivity
 import net.samuelcmace.restaurantbuddyandroid.service.AuthenticationService
+import org.json.JSONObject
 
 /**
  * Activity to register a new user in the application.
@@ -152,7 +153,7 @@ class RegisterActivity : AppCompatActivity() {
      * Method called by the activity after the user has inputted all necessary fields, the inputs have been verified,
      * and the user proceeds to register.
      */
-    private fun register(onSuccess: (message: String) -> Unit, onError: (message: String) -> Unit) {
+    private fun register(onSuccess: (response: JSONObject) -> Unit, onError: (message: String) -> Unit) {
         val authenticationService = AuthenticationService(this)
         authenticationService.register(
             (this.mFragmentSet[1] as ContactInformationEntryFragment).getFirstName(),

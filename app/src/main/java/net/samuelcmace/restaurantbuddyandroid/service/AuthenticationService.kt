@@ -2,9 +2,6 @@ package net.samuelcmace.restaurantbuddyandroid.service
 
 import android.content.Context
 import com.android.volley.Request
-import com.android.volley.RequestQueue
-import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.Volley
 import kotlinx.coroutines.runBlocking
 import net.samuelcmace.restaurantbuddyandroid.AppConfig
 import net.samuelcmace.restaurantbuddyandroid.database.entity.Session
@@ -12,24 +9,21 @@ import org.json.JSONObject
 
 class AuthenticationService(context: Context) : Service(context) {
 
-    private var mRequestQueue: RequestQueue = Volley.newRequestQueue(this.mContext)
-
     fun login(
         username: String,
         password: String,
-        onSuccess: (message: String) -> Unit,
+        onSuccess: (response: JSONObject) -> Unit,
         onError: (message: String) -> Unit
     ) {
         val url = "${AppConfig.getServerUrl()}/auth/authenticate"
-
         val requestObject = JSONObject()
 
         requestObject.put("username", username)
         requestObject.put("password", password)
 
-        val request = authenticate(url, requestObject, onSuccess, onError)
-
-        this.mRequestQueue.add(request)
+        this.plainJSONRequest(url, Request.Method.POST, requestObject, {
+            this.storeActiveToken(it, onSuccess, onError)
+        }, onError)
     }
 
     fun register(
@@ -43,12 +37,10 @@ class AuthenticationService(context: Context) : Service(context) {
         zip: String,
         username: String,
         password: String,
-        onSuccess: (message: String) -> Unit,
+        onSuccess: (response: JSONObject) -> Unit,
         onError: (message: String) -> Unit
     ) {
-        val queue = Volley.newRequestQueue(this.mContext)
         val url = "${AppConfig.getServerUrl()}/auth/register/customer/new"
-
         val requestObject = JSONObject()
 
         requestObject.put("firstName", firstName)
@@ -64,33 +56,27 @@ class AuthenticationService(context: Context) : Service(context) {
         requestObject.put("username", username)
         requestObject.put("password", password)
 
-        val request = authenticate(url, requestObject, onSuccess, onError)
-
-        this.mRequestQueue.add(request)
+        this.plainJSONRequest(url, Request.Method.POST, requestObject, {
+            this.storeActiveToken(it, onSuccess, onError)
+        }, onError)
     }
 
-    private fun authenticate(
-        requestUrl: String,
-        requestObject: JSONObject,
-        onSuccess: (message: String) -> Unit,
+    private fun storeActiveToken(
+        response: JSONObject,
+        onSuccess: (response: JSONObject) -> Unit,
         onError: (message: String) -> Unit
-    ) = JsonObjectRequest(
-        Request.Method.POST, requestUrl, requestObject,
-        { response ->
-            if (!response.get("jwtToken").equals(null)) {
-                runBlocking {
-                    val authToken = Session(null, response.get("jwtToken").toString())
-                    AppConfig.authToken = authToken
-                    mSessionDao.insert(authToken)
-                    onSuccess("JWT token fetched successfully!")
-                }
-            } else {
-                onError("JWT token failed to fetch: " + response.get("errorMessage"))
+    ) {
+        if (!response.get("jwtToken").equals(null)) {
+            runBlocking {
+                val authToken = Session(null, response.get("jwtToken").toString())
+                AppConfig.authToken = authToken
+                mSessionDao.insert(authToken)
             }
-        },
-        {
-            onError("HTTP request was not accepted: " + it.localizedMessage)
-        })
+            onSuccess(response)
+        } else {
+            onError("JWT token failed to fetch: " + response.get("errorMessage"))
+        }
+    }
 
     fun fetchActiveToken(onSuccess: (message: String) -> Unit, onError: (message: String) -> Unit) {
         runBlocking {
