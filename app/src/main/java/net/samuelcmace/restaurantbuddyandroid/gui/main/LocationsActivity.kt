@@ -1,7 +1,9 @@
 package net.samuelcmace.restaurantbuddyandroid.gui.main
 
 import android.annotation.SuppressLint
+import android.location.Geocoder
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -10,9 +12,14 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import net.samuelcmace.restaurantbuddyandroid.R
 import net.samuelcmace.restaurantbuddyandroid.databinding.ActivityLocationsBinding
+import net.samuelcmace.restaurantbuddyandroid.gui.main.jsonmodel.LocationModelCollection
+import net.samuelcmace.restaurantbuddyandroid.service.LocationService
 import pub.devrel.easypermissions.EasyPermissions
+import java.util.*
 
 /**
  * Activity used to load the restaurant locations and display them on a Google Map.
@@ -30,10 +37,17 @@ class LocationsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var binding: ActivityLocationsBinding
 
     /**
+     * The binding object associated with the map activity.
+     */
+    private lateinit var mLocationService: LocationService
+
+    /**
      * Method called by the Android API after the activity has been drawn.
      */
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
+        this.mLocationService = LocationService(this)
 
         binding = ActivityLocationsBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -42,20 +56,46 @@ class LocationsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
     }
 
     /**
      * Method called by the Android API once the map is available and ready to be used.
      */
     override fun onMapReady(googleMap: GoogleMap) {
+
         mMap = googleMap
 
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
-
+        loadLocations()
         enableLocationDetection()
+
+    }
+
+    /**
+     * Method called after the token has been verified to load the locations from the API.
+     */
+    @Suppress("DEPRECATION")
+    private fun loadLocations() {
+        this.mLocationService.getLocations({
+
+            val jsonItems = Json.decodeFromString<LocationModelCollection>(it.toString())
+            val geocoder = Geocoder(this)
+
+            for (item in jsonItems.locations) {
+
+                val address = geocoder.getFromLocationName(item.toString(), 1)
+
+                if (address != null && address.size > 0) {
+                    val coordinate = LatLng(address.first().latitude, address.first().longitude)
+                    mMap.addMarker(MarkerOptions().position(coordinate).title("Marker in Sydney"))
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(coordinate))
+                }
+
+            }
+
+        }, {
+            Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+        })
     }
 
     /**
