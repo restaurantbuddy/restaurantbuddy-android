@@ -7,8 +7,22 @@ import net.samuelcmace.restaurantbuddyandroid.AppConfig
 import net.samuelcmace.restaurantbuddyandroid.database.entity.Session
 import org.json.JSONObject
 
+/**
+ * Custom service class associated with all authentication-related requests (such as logging in and out, as well as
+ * new customer registration).
+ *
+ * @constructor Initializes a new instance of AuthenticationService.
+ */
 class AuthenticationService(context: Context) : Service(context) {
 
+    /**
+     * Method called to log a new user into the system.
+     *
+     * @param username The username sent by the user.
+     * @param password The password sent by the user
+     * @param onSuccess A lambda function containing code to be executed after a successful API request.
+     * @param onError A lambda function containing code to be executed after a failed API request.
+     */
     fun login(
         username: String,
         password: String,
@@ -26,6 +40,22 @@ class AuthenticationService(context: Context) : Service(context) {
         }, onError)
     }
 
+    /**
+     * Method called to register a new user into the system.
+     *
+     * @param firstName The user's first name.
+     * @param lastName The user's last name.
+     * @param email The user's email address.
+     * @param phone The user's phone number.
+     * @param address The user's US-based postal address.
+     * @param city The user's US-based city.
+     * @param state The user's US-based state.
+     * @param zip The user's US-based zip code.
+     * @param username The username for the new login.
+     * @param password The password for the new login.
+     * @param onSuccess A lambda function containing code to be executed after a successful API request.
+     * @param onError A lambda function containing code to be executed after a failed API request.
+     */
     fun register(
         firstName: String,
         lastName: String,
@@ -61,6 +91,14 @@ class AuthenticationService(context: Context) : Service(context) {
         }, onError)
     }
 
+    /**
+     * Method to store the active token both in the database (for applications that have just been opened)
+     * and in the singleton class (for smooth switching between activities).
+     *
+     * @param response The JSON object returned after the JWT token object has been sent.
+     * @param onSuccess A lambda function containing code to be executed after a successful API request.
+     * @param onError A lambda function containing code to be executed after a failed API request.
+     */
     private fun storeActiveToken(
         response: JSONObject,
         onSuccess: (response: JSONObject) -> Unit,
@@ -78,6 +116,12 @@ class AuthenticationService(context: Context) : Service(context) {
         }
     }
 
+    /**
+     * Method to fetch the active token from the database and store it in the singleton object.
+     *
+     * @param onSuccess A lambda function containing code to be executed after a successful API request.
+     * @param onError A lambda function containing code to be executed after a failed API request.
+     */
     fun fetchActiveToken(onSuccess: (message: String) -> Unit, onError: (message: String) -> Unit) {
         runBlocking {
             val mSessionTokens: List<Session> = mSessionDao.getAll()
@@ -91,6 +135,11 @@ class AuthenticationService(context: Context) : Service(context) {
         }
     }
 
+    /**
+     * Method called to log the user out of the application.
+     *
+     * @param onSuccess A lambda function containing code to be executed after a successful API request.
+     */
     fun logout(onSuccess: (message: String) -> Unit) {
         AppConfig.authToken?.let {
             runBlocking {

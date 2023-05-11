@@ -24,6 +24,8 @@ object AppConfig {
 
     /**
      * Gets a string containing the entire server url, including the server protocol, domain, port, and root route.
+     *
+     * @return The root API route in String format.
      */
     fun getServerUrl() = "$SERVER_PROTOCOL://$SERVER_DOMAIN:$SERVER_PORT/api/v1"
 

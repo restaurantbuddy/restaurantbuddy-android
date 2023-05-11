@@ -58,7 +58,13 @@ abstract class Service(context: Context) {
     }
 
     /**
-     * Method called to
+     * Method called to initiate a new JSON request with the authentication token stored in the singleton object.
+     *
+     * @param url The URL to query.
+     * @param httpMethod The HTTP method for the request (such as GET, POST, PUT, or DELETE).
+     * @param requestObject The JSON object to be sent to the server when initiating the request.
+     * @param onSuccess A lambda function containing code to be executed after a successful API request.
+     * @param onError A lambda function containing code to be executed after a failed API request.
      */
     protected fun authenticatedJSONRequest(
         url: String,
@@ -86,6 +92,15 @@ abstract class Service(context: Context) {
         mRequestQueue.add(request)
     }
 
+    /**
+     * Method called to initiate a new JSON request without any authentication.
+     *
+     * @param url The URL to query.
+     * @param httpMethod The HTTP method for the request (such as GET, POST, PUT, or DELETE).
+     * @param requestObject The JSON object to be sent to the server when initiating the request.
+     * @param onSuccess A lambda function containing code to be executed after a successful API request.
+     * @param onError A lambda function containing code to be executed after a failed API request.
+     */
     protected fun plainJSONRequest(
         url: String,
         httpMethod: Int,

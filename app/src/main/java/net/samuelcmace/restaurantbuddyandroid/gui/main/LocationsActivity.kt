@@ -48,6 +48,8 @@ class LocationsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     /**
      * Method called by the Android API after the activity has been drawn.
+     *
+     * @param savedInstanceState The object to reference the previously-created activity if it is being recreated.
      */
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -66,6 +68,8 @@ class LocationsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     /**
      * Method called by the Android API once the map is available and ready to be used.
+     *
+     * @param googleMap The Google Map object that is now readily-initialized by the API.
      */
     override fun onMapReady(googleMap: GoogleMap) {
 
@@ -127,6 +131,10 @@ class LocationsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     /**
      * Method called by the Google Maps API after location detection has been enabled.
+     *
+     * @param requestCode The request code sent to the Google API.
+     * @param permissions The permissions requested by the activity.
+     * @param grantResults The results sent back after the permissions have been granted.
      */
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -171,6 +179,9 @@ class LocationsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     /**
      * Method called by the Android API to load the menu bar for the activity.
+     *
+     * @param menu The menu to be inflated.
+     * @return A boolean containing the result of the menu inflation process.
      */
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_locations, menu)
@@ -179,6 +190,9 @@ class LocationsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     /**
      * Method called by the Android API after a menu item has been selected.
+     *
+     * @param item The menu item that was selected.
+     * @return A boolean containing the result of the menu item selection process.
      */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
