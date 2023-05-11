@@ -6,6 +6,10 @@
         android:title="@string/itCart" />
 
     <item
+        android:id="@+id/itLocations"
+        android:title="@string/itLocations" />
+
+    <item
         android:id="@+id/itFeedback"
         android:title="@string/itFeedback" />
 

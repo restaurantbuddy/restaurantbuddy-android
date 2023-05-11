@@ -1,4 +1,4 @@
-package net.samuelcmace.restaurantbuddyandroid.gui.main.menu
+package net.samuelcmace.restaurantbuddyandroid.gui.main.main
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -36,7 +36,6 @@ class MenuItemAdapter(private val context: Context) : RecyclerView.Adapter<MenuI
         this.allItems = items
         notifyDataSetChanged()
     }
-
 
     inner class MenuItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 

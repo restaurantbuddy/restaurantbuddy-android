@@ -1,4 +1,4 @@
-package net.samuelcmace.restaurantbuddyandroid.gui.main.menu
+package net.samuelcmace.restaurantbuddyandroid.gui.main.main
 
 import android.content.Intent
 import android.os.Bundle
@@ -15,6 +15,7 @@ import net.samuelcmace.restaurantbuddyandroid.R
 import net.samuelcmace.restaurantbuddyandroid.database.entity.Item
 import net.samuelcmace.restaurantbuddyandroid.gui.auth.LoginActivity
 import net.samuelcmace.restaurantbuddyandroid.gui.main.FeedbackActivity
+import net.samuelcmace.restaurantbuddyandroid.gui.main.LocationsActivity
 import net.samuelcmace.restaurantbuddyandroid.gui.main.cart.CartActivity
 import net.samuelcmace.restaurantbuddyandroid.gui.main.jsonmodel.ItemModelCollection
 import net.samuelcmace.restaurantbuddyandroid.service.AuthenticationService
@@ -23,7 +24,7 @@ import net.samuelcmace.restaurantbuddyandroid.service.CustomerService
 /**
  * Activity representing the menu that the restaurant offers.
  */
-class MenuActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
     /**
      * Instance of the AuthenticationService used by the activity.
@@ -51,7 +52,7 @@ class MenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_menu)
+        setContentView(R.layout.activity_main)
 
         this.mAuthenticationService = AuthenticationService(this)
         this.mCustomerService = CustomerService(this)
@@ -106,6 +107,10 @@ class MenuActivity : AppCompatActivity() {
 
             R.id.itCart -> {
                 startActivity(Intent(this, CartActivity::class.java))
+            }
+
+            R.id.itLocations -> {
+                startActivity(Intent(this, LocationsActivity::class.java))
             }
 
             R.id.itFeedback -> {

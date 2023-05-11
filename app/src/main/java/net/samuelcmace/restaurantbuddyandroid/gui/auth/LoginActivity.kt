@@ -8,7 +8,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import net.samuelcmace.restaurantbuddyandroid.R
-import net.samuelcmace.restaurantbuddyandroid.gui.main.menu.MenuActivity
+import net.samuelcmace.restaurantbuddyandroid.gui.main.main.MainActivity
 import net.samuelcmace.restaurantbuddyandroid.service.AuthenticationService
 
 /**
@@ -61,7 +61,7 @@ class LoginActivity : AppCompatActivity() {
 
         this.mLoginButton.setOnClickListener {
             mAuthenticationService.login(mUsernameTextEdit.text.toString(), mPasswordEditText.text.toString(), {
-                startActivity(Intent(this, MenuActivity::class.java))
+                startActivity(Intent(this, MainActivity::class.java))
                 finish()
             }, {
                 Toast.makeText(this, it, Toast.LENGTH_SHORT).show()

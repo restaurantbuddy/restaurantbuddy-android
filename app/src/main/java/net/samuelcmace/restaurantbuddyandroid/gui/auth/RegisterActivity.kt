@@ -14,7 +14,7 @@ import net.samuelcmace.restaurantbuddyandroid.gui.auth.fragment.AddressEntryFrag
 import net.samuelcmace.restaurantbuddyandroid.gui.auth.fragment.ContactInformationEntryFragment
 import net.samuelcmace.restaurantbuddyandroid.gui.auth.fragment.UsernamePasswordEntryFragment
 import net.samuelcmace.restaurantbuddyandroid.gui.auth.fragment.Verifiable
-import net.samuelcmace.restaurantbuddyandroid.gui.main.menu.MenuActivity
+import net.samuelcmace.restaurantbuddyandroid.gui.main.main.MainActivity
 import net.samuelcmace.restaurantbuddyandroid.service.AuthenticationService
 import org.json.JSONObject
 
@@ -108,7 +108,7 @@ class RegisterActivity : AppCompatActivity() {
 
             4 -> {
                 register({
-                    startActivity(Intent(this, MenuActivity::class.java))
+                    startActivity(Intent(this, MainActivity::class.java))
                     finish()
                 },
                     {

@@ -46,4 +46,7 @@
     <string name="itBack">Back</string>
     <string name="itClearCart">Clear Cart</string>
     <string name="itCart">Cart</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="ok">OK</string>
+    <string name="itLocations">Locations</string>
 </resources>

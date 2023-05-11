@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -12,6 +14,14 @@
         android:theme="@style/Theme.RestaurantBuddyAndroid"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}" />
+
+        <activity
+            android:name=".gui.main.LocationsActivity"
+            android:exported="false" />
         <activity
             android:name=".gui.main.FeedbackActivity"
             android:exported="false" />
@@ -19,7 +29,7 @@
             android:name=".gui.main.cart.CartActivity"
             android:exported="false" />
         <activity
-            android:name=".gui.main.menu.MenuActivity"
+            android:name=".gui.main.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

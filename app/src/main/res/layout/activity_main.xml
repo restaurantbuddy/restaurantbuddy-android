@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".gui.main.menu.MenuActivity">
+    tools:context=".gui.main.main.MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMenu"
