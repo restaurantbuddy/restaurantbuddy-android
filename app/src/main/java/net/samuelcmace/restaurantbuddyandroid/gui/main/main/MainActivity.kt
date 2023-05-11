@@ -23,31 +23,24 @@ import net.samuelcmace.restaurantbuddyandroid.service.CustomerService
 
 /**
  * Activity representing the menu that the restaurant offers.
+ *
+ * @property mAuthenticationService Instance of the AuthenticationService used by the activity.
+ * @property mCustomerService Instance of the CustomerService used by the activity.
+ * @property rvMenu Instance of the RecyclerView used by the activity.
+ * @property mMenuItemListAdapter Instance of the MenuItemAdapter used by the activity.
  */
 class MainActivity : AppCompatActivity() {
 
-    /**
-     * Instance of the AuthenticationService used by the activity.
-     */
     private lateinit var mAuthenticationService: AuthenticationService
-
-    /**
-     * Instance of the CustomerService used by the activity.
-     */
     private lateinit var mCustomerService: CustomerService
 
-    /**
-     * Instance of the RecyclerView used by the activity.
-     */
     private lateinit var rvMenu: RecyclerView
-
-    /**
-     * Instance of the MenuItemAdapter used by the activity.
-     */
     private lateinit var mMenuItemListAdapter: MenuItemAdapter
 
     /**
      * Method called by the Android API after the UI has been drawn.
+     *
+     * @param savedInstanceState The object to reference the previously-created activity if it is being recreated.
      */
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -93,6 +86,9 @@ class MainActivity : AppCompatActivity() {
 
     /**
      * Method called by the Android API to load the menu bar for the activity.
+     *
+     * @param menu The menu to be inflated.
+     * @return A boolean containing the result of the menu inflation process.
      */
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
@@ -101,6 +97,9 @@ class MainActivity : AppCompatActivity() {
 
     /**
      * Method called by the Android API after a menu item has been selected.
+     *
+     * @param item The menu item that was selected.
+     * @return A boolean containing the result of the menu item selection process.
      */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {

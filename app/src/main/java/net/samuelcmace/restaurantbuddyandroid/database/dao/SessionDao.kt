@@ -13,12 +13,14 @@ interface SessionDao {
 
     /**
      * Method to retrieve all the SESSION(s) stored in the database.
+     * @return All the session tokens stored in the database. Ideally, there should be one and only one session token stored in the database.
      */
     @Query("SELECT * FROM SESSION")
     suspend fun getAll(): List<Session>
 
     /**
      * Method to add a new instance to the database.
+     * @param sessions The new Session objects to be inserted into the database.
      */
     @Insert
     suspend fun insert(vararg sessions: Session)

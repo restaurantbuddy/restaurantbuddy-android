@@ -33,6 +33,9 @@ class AddressEntryFragment : Fragment(R.layout.fragment_address_entry), Verifiab
 
     /**
      * Method called by the Android API after the fragment has been drawn.
+     *
+     * @param view The view being created by the fragment.
+     * @param savedInstanceState The object to reference the previously-created fragment if it is being recreated.
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
@@ -47,21 +50,29 @@ class AddressEntryFragment : Fragment(R.layout.fragment_address_entry), Verifiab
 
     /**
      * Method to retrieve the string value of the postal address field.
+     *
+     * @return The string value of the postal address field.
      */
     fun getPostalAddress() = this.etPostalAddress.text.toString()
 
     /**
      * Method to retrieve the string value of the city field.
+     *
+     * @return The string value of the city field.
      */
     fun getCity() = this.etCity.text.toString()
 
     /**
      * Method to retrieve the string value of the state field.
+     *
+     * @return The string value of the state field.
      */
     fun getState() = this.etState.text.toString()
 
     /**
      * Method to retrieve the string value of the zip code field.
+     *
+     * @return The string value of the zip code field.
      */
     fun getZip() = this.etZip.text.toString()
 

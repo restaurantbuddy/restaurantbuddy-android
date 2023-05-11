@@ -44,6 +44,8 @@ class LoginActivity : AppCompatActivity() {
 
     /**
      * Method called by the Android API when the UI is drawn.
+     *
+     * @param savedInstanceState The object to reference the previously-created activity if it is being recreated.
      */
     override fun onCreate(savedInstanceState: Bundle?) {
 

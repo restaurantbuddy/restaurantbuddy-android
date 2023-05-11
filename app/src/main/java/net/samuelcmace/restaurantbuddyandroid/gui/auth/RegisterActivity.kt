@@ -53,6 +53,8 @@ class RegisterActivity : AppCompatActivity() {
 
     /**
      * Method called by the Android API when the UI is drawn.
+     *
+     * @param savedInstanceState The object to reference the previously-created activity if it is being recreated.
      */
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -91,6 +93,8 @@ class RegisterActivity : AppCompatActivity() {
      * This method will verify the input fields, and will then proceed to update the fragment GUI by calling the
      * {@link updateFragmentGUI()} method afterward. If the user is on the third fragment and continues next,
      * the registration process will begin instead.
+     *
+     * @param newFragmentIndex The new fragment index to switch to.
      */
     private fun switchFragment(newFragmentIndex: Int) {
         if (newFragmentIndex > this.mCurrentFragmentIndex) {
@@ -125,6 +129,8 @@ class RegisterActivity : AppCompatActivity() {
 
     /**
      * Method called to update both the fragment and fragment index.
+     *
+     * @param newFragmentIndex The new fragment index to switch to.
      */
     private fun updateFragmentGUI(newFragmentIndex: Int) {
         supportFragmentManager.commit {
@@ -152,6 +158,9 @@ class RegisterActivity : AppCompatActivity() {
     /**
      * Method called by the activity after the user has inputted all necessary fields, the inputs have been verified,
      * and the user proceeds to register.
+     *
+     * @param onSuccess A lambda function containing the code to be executed upon a successful API query.
+     * @param onError A lambda function containing the code to be executed upon a failed API query.
      */
     private fun register(onSuccess: (response: JSONObject) -> Unit, onError: (message: String) -> Unit) {
         val authenticationService = AuthenticationService(this)

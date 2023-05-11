@@ -25,11 +25,15 @@ abstract class DatabaseManager : RoomDatabase() {
 
     /**
      * Method to instantiate a new instance of the SessionDao.
+     *
+     * @return A new automatically-implemented instance of the SessionDao interface.
      */
     abstract fun sessionDao(): SessionDao
 
     /**
      * Method to instantiate a new instance of ItemDao.
+     *
+     * @return A new automatically-implemented instance of the ItemDao interface.
      */
     abstract fun itemDao(): ItemDao
 

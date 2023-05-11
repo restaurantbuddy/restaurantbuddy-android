@@ -33,6 +33,9 @@ class ContactInformationEntryFragment : Fragment(R.layout.fragment_contact_infor
 
     /**
      * Method called by the Android API after the fragment has been drawn.
+     *
+     * @param view The view being created by the fragment.
+     * @param savedInstanceState The object to reference the previously-created fragment if it is being recreated.
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
@@ -47,21 +50,29 @@ class ContactInformationEntryFragment : Fragment(R.layout.fragment_contact_infor
 
     /**
      * Method to retrieve the string value of the first name field.
+     *
+     * @return The string value of the first name field.
      */
     fun getFirstName() = etFirstName.text.toString()
 
     /**
      * Method to retrieve the string value of the last name field.
+     *
+     * @return The string value of the last name field.
      */
     fun getLastName() = etLastName.text.toString()
 
     /**
      * Method to retrieve the string value of the email address field.
+     *
+     * @return The string value of the email address field.
      */
     fun getEmailAddress() = etEmailAddress.text.toString()
 
     /**
      * Method to retrieve the string value of the phone number field.
+     *
+     * @return The string value of the phone number field.
      */
     fun getPhoneNumber() = etPhoneNumber.text.toString()
 

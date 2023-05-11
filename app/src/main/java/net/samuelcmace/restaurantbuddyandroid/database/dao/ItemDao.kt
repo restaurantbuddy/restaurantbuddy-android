@@ -14,18 +14,24 @@ interface ItemDao {
 
     /**
      * Method to retrieve all instances of the ITEM table stored in the database.
+     *
+     * @return A list of the items retrieved from the database.
      */
     @Query("SELECT * FROM ITEM")
     suspend fun getAll(): List<Item>
 
     /**
      * Method to insert (or persist) a new ITEM into the database.
+     *
+     * @param items The new Item objects to be inserted into the database.
      */
     @Insert
     suspend fun insert(vararg items: Item)
 
     /**
      * Method to delete the corresponding item from the database.
+     *
+     * @param items The Item objects to be deleted from the database.
      */
     @Delete
     suspend fun delete(vararg items: Item)

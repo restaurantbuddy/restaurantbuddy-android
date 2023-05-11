@@ -33,6 +33,9 @@ class UsernamePasswordEntryFragment : Fragment(R.layout.fragment_username_passwo
 
     /**
      * Method called by the Android API after the fragment has been drawn.
+     *
+     * @param view The view being created by the fragment.
+     * @param savedInstanceState The object to reference the previously-created fragment if it is being recreated.
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,26 +44,33 @@ class UsernamePasswordEntryFragment : Fragment(R.layout.fragment_username_passwo
         this.etConfirmUsername = view.findViewById(R.id.etConfirmUsername)
         this.etPassword = view.findViewById(R.id.etPassword)
         this.etConfirmPassword = view.findViewById(R.id.etConfirmPassword)
-
     }
 
     /**
      * Method to retrieve the string value of the username field.
+     *
+     * @return The string value of the username field.
      */
     fun getUsername() = this.etUsername.text.toString()
 
     /**
      * Method to retrieve the string value of the username confirmation field.
+     *
+     * @return The string value of the username confirmation field.
      */
     fun getConfirmUsername() = this.etConfirmUsername.text.toString()
 
     /**
      * Method to retrieve the string value of the password field.
+     *
+     * @return The string value of the password field.
      */
     fun getPassword() = this.etPassword.text.toString()
 
     /**
      * Method to retrieve the string value of the password confirmation field.
+     *
+     * @return The string value of the password confirmation field.
      */
     fun getConfirmPassword() = this.etConfirmPassword.text.toString()
 

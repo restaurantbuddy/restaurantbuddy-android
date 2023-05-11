@@ -1,8 +1,9 @@
 package net.samuelcmace.restaurantbuddyandroid.gui.main
 
 import android.annotation.SuppressLint
-import android.location.Geocoder
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -12,12 +13,16 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.snackbar.Snackbar
+import com.google.maps.GeoApiContext
+import com.google.maps.GeocodingApi
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
+import net.samuelcmace.restaurantbuddyandroid.BuildConfig
 import net.samuelcmace.restaurantbuddyandroid.R
 import net.samuelcmace.restaurantbuddyandroid.databinding.ActivityLocationsBinding
 import net.samuelcmace.restaurantbuddyandroid.gui.main.jsonmodel.LocationModelCollection
 import net.samuelcmace.restaurantbuddyandroid.service.LocationService
+import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 import java.util.*
 
@@ -66,36 +71,58 @@ class LocationsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         mMap = googleMap
 
-        loadLocations()
         enableLocationDetection()
+
+        Toast.makeText(this, "Loading locations... one moment...", Toast.LENGTH_LONG).show()
+        loadLocations()
 
     }
 
     /**
      * Method called after the token has been verified to load the locations from the API.
      */
-    @Suppress("DEPRECATION")
     private fun loadLocations() {
+
         this.mLocationService.getLocations({
 
-            val jsonItems = Json.decodeFromString<LocationModelCollection>(it.toString())
-            val geocoder = Geocoder(this)
+            try {
+                val jsonItems = Json.decodeFromString<LocationModelCollection>(it.toString())
+                val geocoder = GeoApiContext.Builder().apiKey(BuildConfig.MAPS_API_KEY).build()
 
-            for (item in jsonItems.locations) {
+                val locations = ArrayList<LatLng>()
 
-                val address = geocoder.getFromLocationName(item.toString(), 1)
+                for (item in jsonItems.locations) {
 
-                if (address != null && address.size > 0) {
-                    val coordinate = LatLng(address.first().latitude, address.first().longitude)
-                    mMap.addMarker(MarkerOptions().position(coordinate).title("Marker in Sydney"))
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(coordinate))
+                    val results = GeocodingApi.geocode(geocoder, item.toString()).await()
+
+                    if (results.isNotEmpty()) {
+                        val coordinate =
+                            LatLng(results.first().geometry.location.lat, results.first().geometry.location.lng)
+                        locations.add(coordinate)
+                        mMap.addMarker(MarkerOptions().position(coordinate).title(item.address))
+                        mMap.moveCamera(CameraUpdateFactory.newLatLng(coordinate))
+                    }
+
                 }
 
+                val lastLocation = locations.last()
+                this.mMap.animateCamera(
+                    CameraUpdateFactory.newLatLngZoom(
+                        lastLocation,
+                        12.0f
+                    )
+                )
+
+            } catch (e: Exception) {
+                e.localizedMessage?.let { errorMessage ->
+                    Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
+                }
             }
 
         }, {
             Toast.makeText(this, it, Toast.LENGTH_LONG).show()
         })
+
     }
 
     /**
@@ -110,6 +137,7 @@ class LocationsActivity : AppCompatActivity(), OnMapReadyCallback {
      * Method called to load location detection on the Google Map.
      */
     @SuppressLint("MissingPermission")
+    @AfterPermissionGranted(RC_LOCATION)
     private fun enableLocationDetection() {
         val requiredContext = applicationContext
 
@@ -139,6 +167,28 @@ class LocationsActivity : AppCompatActivity(), OnMapReadyCallback {
          */
         const val RC_LOCATION = 10
 
+    }
+
+    /**
+     * Method called by the Android API to load the menu bar for the activity.
+     */
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_locations, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    /**
+     * Method called by the Android API after a menu item has been selected.
+     */
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+
+            R.id.itBack -> {
+                finish()
+            }
+
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 }
