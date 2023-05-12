@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import net.samuelcmace.restaurantbuddyandroid.R
@@ -66,12 +67,24 @@ class MenuItemAdapter(private val context: Context) : RecyclerView.Adapter<MenuI
 
         holder.itemView.setOnClickListener {
 
-            val builder: AlertDialog.Builder = AlertDialog.Builder(this.context)
-
-            builder.setMessage("Would you like a ${allItems[position].name}?")
+            AlertDialog.Builder(this.context)
                 .setTitle("Item Confirmation")
-
-            builder.create()
+                .setMessage("Would you like a ${allItems[position].name}?")
+                .setPositiveButton("Yes") { _, _ ->
+                    this.mCustomerService.addItemToCart(allItems[position])
+                    Toast.makeText(
+                        this.context,
+                        "You added the ${allItems[position].name} to your menu.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                .setNegativeButton("No") { _, _ ->
+                    Toast.makeText(
+                        this.context,
+                        "You refrained from adding the ${allItems[position].name} to your menu.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }.create().show()
 
         }
 

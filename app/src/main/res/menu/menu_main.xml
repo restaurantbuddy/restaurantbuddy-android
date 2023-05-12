@@ -1,20 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/itCart"
-        android:title="@string/itCart" />
+        android:icon="@drawable/icon_cart"
+        android:title="@string/itCart"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/itLocations"
-        android:title="@string/itLocations" />
+        android:icon="@drawable/icon_location"
+        android:title="@string/itLocations"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/itFeedback"
-        android:title="@string/itFeedback" />
+        android:icon="@drawable/icon_feedback"
+        android:title="@string/itFeedback"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/itLogout"
-        android:title="@string/itLogout" />
+        android:icon="@drawable/icon_logout"
+        android:title="@string/itLogout"
+        app:showAsAction="ifRoom" />
 
 </menu>

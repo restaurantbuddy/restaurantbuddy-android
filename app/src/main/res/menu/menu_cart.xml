@@ -9,6 +9,7 @@
 
     <item
         android:id="@+id/itBack"
+        android:icon="@drawable/icon_back"
         android:title="@string/itBack"
         app:showAsAction="ifRoom" />
 

@@ -41,13 +41,30 @@ class CustomerService(context: Context) : Service(context) {
      * Method called to store a menu item from the API in the cart (implemented in the Room database).
      *
      * @param item The item to be stored in the cart.
-     * @param quantity The item quantity to be stored.
      */
-    fun addItemToCart(item: Item, quantity: Int) {
-        repeat(quantity) {
-            runBlocking {
-                mItemDao.insert(item)
-            }
+    fun addItemToCart(item: Item) {
+        runBlocking {
+            mItemDao.insert(item)
+        }
+    }
+
+    /**
+     * Method called to delete an item from the shopping cart.
+     *
+     * @param item The item to be deleted from the cart.
+     */
+    fun removeItemFromCart(item: Item) {
+        runBlocking {
+            mItemDao.insert(item)
+        }
+    }
+
+    /**
+     * Method called to clear all items from the shopping cart.
+     */
+    fun clearShoppingCart() {
+        runBlocking {
+            mItemDao.clear()
         }
     }
 
@@ -57,7 +74,7 @@ class CustomerService(context: Context) : Service(context) {
      * @return A set containing the items in the cart.
      */
     fun getCartItems(): List<Item> {
-        var data: List<Item>
+        var data: List<Item> = ArrayList()
         runBlocking {
             data = mItemDao.getAll()
         }

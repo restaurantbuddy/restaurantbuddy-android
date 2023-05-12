@@ -21,16 +21,20 @@
 
         <activity
             android:name=".gui.main.LocationsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/activity_label_locations" />
         <activity
             android:name=".gui.main.FeedbackActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/activity_label_feedback" />
         <activity
             android:name=".gui.main.cart.CartActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/activity_label_cart" />
         <activity
             android:name=".gui.main.main.MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:label="@string/activity_label_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,10 +43,12 @@
         </activity>
         <activity
             android:name=".gui.auth.RegisterActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:label="@string/activity_label_register" />
         <activity
             android:name=".gui.auth.LoginActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:label="@string/activity_label_login" />
     </application>
 
 </manifest>

@@ -4,9 +4,13 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import net.samuelcmace.restaurantbuddyandroid.R
 import net.samuelcmace.restaurantbuddyandroid.database.entity.Item
+import net.samuelcmace.restaurantbuddyandroid.service.CustomerService
 
 /**
  * Adapter class for the cart item RecyclerView.
@@ -17,7 +21,8 @@ import net.samuelcmace.restaurantbuddyandroid.database.entity.Item
  */
 class CartItemAdapter(private val context: Context) : RecyclerView.Adapter<CartItemAdapter.CartItemHolder>() {
 
-    private val items: ArrayList<Item> = ArrayList()
+    private lateinit var mCustomerService: CustomerService
+    private var items: List<Item> = ArrayList()
 
     /**
      * Method called by the Android API after the view has been created.
@@ -45,7 +50,49 @@ class CartItemAdapter(private val context: Context) : RecyclerView.Adapter<CartI
      * @param position The index that corresponds to the item in question.
      */
     override fun onBindViewHolder(holder: CartItemHolder, position: Int) {
-        TODO("Not yet implemented")
+
+        holder.itemView.apply {
+            val tvProductName = findViewById<TextView>(R.id.tvProductName)
+            val tvProductPrice = findViewById<TextView>(R.id.tvProductPrice)
+
+            tvProductName.text = items[position].name
+            tvProductPrice.text = items[position].cost.toString()
+        }
+
+        holder.itemView.setOnClickListener {
+
+            AlertDialog.Builder(this.context)
+                .setTitle("Deletion Confirmation")
+                .setMessage("Would you like to delete the ${items[position].name} from your cart?")
+                .setPositiveButton("Yes") { _, _ ->
+                    this.mCustomerService.removeItemFromCart(items[position])
+                    notifyItemChanged(position)
+                    Toast.makeText(
+                        this.context,
+                        "You deleted the ${items[position].name} from your shopping cart.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                .setNegativeButton("No") { _, _ ->
+                    Toast.makeText(
+                        this.context,
+                        "You refrained from deleting the ${items[position].name} from your shopping cart.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }.create().show()
+
+        }
+
+    }
+
+    /**
+     * Method called to set the active items in the cart.
+     *
+     * @param items The items to be assigned to the adapter upon initialization.
+     */
+    fun setCartItems(items: List<Item>) {
+        this.items = items
+        notifyDataSetChanged()
     }
 
     /**

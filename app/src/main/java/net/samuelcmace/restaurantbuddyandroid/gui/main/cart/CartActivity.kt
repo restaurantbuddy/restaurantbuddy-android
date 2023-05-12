@@ -4,13 +4,26 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import net.samuelcmace.restaurantbuddyandroid.R
+import net.samuelcmace.restaurantbuddyandroid.service.CustomerService
 
 /**
  * Activity representing the user's cart.
+ *
+ * @property mCustomerService The instance of CustomerService used by the activity.
+ * @property rvCart The RecyclerView object used to view the items in the cart (stored in the database).
+ * @property mCartItemAdapter The adapter object for the RecyclerView.
  */
 class CartActivity : AppCompatActivity() {
+
+    private lateinit var mCustomerService: CustomerService
+
+    private lateinit var rvCart: RecyclerView
+    private lateinit var mCartItemAdapter: CartItemAdapter
 
     /**
      * Method called by the Android API after the UI has been drawn.
@@ -20,6 +33,12 @@ class CartActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart)
+
+        this.mCustomerService = CustomerService(this)
+
+        this.rvCart = findViewById(R.id.rvCart)
+        this.rvCart.layoutManager = LinearLayoutManager(this)
+        this.mCartItemAdapter = CartItemAdapter(this)
 
         loadCart()
     }
@@ -43,7 +62,26 @@ class CartActivity : AppCompatActivity() {
         when (item.itemId) {
 
             R.id.itClearCart -> {
-                clearCart()
+
+                AlertDialog.Builder(this)
+                    .setTitle("Item Confirmation")
+                    .setMessage("Would you like to clear the shopping cart of all active items?")
+                    .setPositiveButton("Yes") { _, _ ->
+                        clearCart()
+                        Toast.makeText(
+                            this,
+                            "You cleared your shopping cart of all items.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    .setNegativeButton("No") { _, _ ->
+                        Toast.makeText(
+                            this,
+                            "You refrained from clearing your shopping cart of all items.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }.create().show()
+
             }
 
             R.id.itBack -> {
@@ -58,9 +96,7 @@ class CartActivity : AppCompatActivity() {
      * Method called to load all the items from the cart in the database.
      */
     private fun loadCart() {
-        Toast.makeText(this, "Thanks for stopping by, but this method has not yet been implemented.", Toast.LENGTH_LONG)
-            .show()
-        TODO("Implement the loadCart method in the CartActivity")
+        this.mCartItemAdapter.setCartItems(this.mCustomerService.getCartItems())
     }
 
     /**
@@ -68,9 +104,8 @@ class CartActivity : AppCompatActivity() {
      * in the database.
      */
     private fun clearCart() {
-        Toast.makeText(this, "Thanks for stopping by, but this method has not yet been implemented.", Toast.LENGTH_LONG)
-            .show()
-        TODO("Implement the clearCart method in the CartActivity")
+        this.mCustomerService.clearShoppingCart()
+        loadCart()
     }
 
 }
