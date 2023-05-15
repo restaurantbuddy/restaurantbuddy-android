@@ -5,6 +5,7 @@ import com.android.volley.Request.Method
 import kotlinx.coroutines.runBlocking
 import net.samuelcmace.restaurantbuddyandroid.AppConfig
 import net.samuelcmace.restaurantbuddyandroid.database.entity.Item
+import org.json.JSONArray
 import org.json.JSONObject
 
 /**
@@ -54,10 +55,10 @@ class CustomerService(context: Context) : Service(context) {
             }
         }
 
-        val jsonRequest = JSONObject()
-        jsonRequest.put("menuItems", arrayListItems)
+        val jsonObject = JSONObject()
+        jsonObject.put("menuItems", JSONArray(arrayListItems))
 
-        authenticatedJSONRequest(url, Method.POST, jsonRequest, onSuccess, onError)
+        authenticatedJSONRequest(url, Method.POST, jsonObject, onSuccess, onError)
 
     }
 
