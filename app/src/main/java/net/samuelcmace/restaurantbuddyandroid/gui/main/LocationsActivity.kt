@@ -103,7 +103,7 @@ class LocationsActivity : AppCompatActivity(), OnMapReadyCallback {
                         val coordinate =
                             LatLng(results.first().geometry.location.lat, results.first().geometry.location.lng)
                         locations.add(coordinate)
-                        mMap.addMarker(MarkerOptions().position(coordinate).title(item.address))
+                        mMap.addMarker(MarkerOptions().position(coordinate).title(item.name).snippet(item.toString()))
                         mMap.moveCamera(CameraUpdateFactory.newLatLng(coordinate))
                     }
 

@@ -55,7 +55,7 @@ class CustomerService(context: Context) : Service(context) {
      */
     fun removeItemFromCart(item: Item) {
         runBlocking {
-            mItemDao.insert(item)
+            mItemDao.delete(item)
         }
     }
 

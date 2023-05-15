@@ -1,6 +1,5 @@
 package net.samuelcmace.restaurantbuddyandroid.gui.main.jsonmodel
 
-import androidx.room.ColumnInfo
 import kotlinx.serialization.Serializable
 
 /**
@@ -14,17 +13,19 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class LocationModel(
-    @ColumnInfo(name = "LOCATION_ADDRESS") var address: String?,
-    @ColumnInfo(name = "LOCATION_CITY") val city: String?,
-    @ColumnInfo(name = "LOCATION_STATE") val state: String?,
-    @ColumnInfo(name = "LOCATION_ZIP") val zip: String?
+    var id: Long?,
+    var name: String?,
+    var address: String?,
+    val city: String?,
+    val state: String?,
+    val zip: String?
 ) {
 
     /**
      * Method to retrieve the string value of the address.
      */
     override fun toString(): String {
-        return "$address\n$city, $state $zip"
+        return "$address, $city, $state $zip"
     }
 
 }

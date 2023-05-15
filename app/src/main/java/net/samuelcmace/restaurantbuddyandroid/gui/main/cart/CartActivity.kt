@@ -31,6 +31,7 @@ class CartActivity : AppCompatActivity() {
      * @param savedInstanceState The object to reference the previously-created activity if it is being recreated.
      */
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart)
 
@@ -41,6 +42,8 @@ class CartActivity : AppCompatActivity() {
         this.mCartItemAdapter = CartItemAdapter(this)
 
         loadCart()
+        refreshRecyclerView()
+
     }
 
     /**
@@ -90,6 +93,13 @@ class CartActivity : AppCompatActivity() {
 
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    /**
+     * Method to refresh the recycler view with updated data.
+     */
+    private fun refreshRecyclerView() {
+        this.rvCart.adapter = this.mCartItemAdapter
     }
 
     /**

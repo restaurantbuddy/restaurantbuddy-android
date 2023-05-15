@@ -13,13 +13,13 @@
         android:padding="50dp">
 
         <TextView
-            android:id="@+id/activity_register_info_textview"
+            android:id="@+id/tvRegisterInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/activity_register_info_textview" />
 
         <FrameLayout
-            android:id="@+id/fragment_information_entry"
+            android:id="@+id/fgRegisterInformationEntry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -34,22 +34,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="25dp"
-                android:text="Previous" />
+                android:text="@string/btPrevious" />
 
             <Button
                 android:id="@+id/btNext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="25dp"
-                android:text="Next" />
+                android:text="@string/btNext" />
 
         </LinearLayout>
 
         <TextView
-            android:id="@+id/activity_register_switch_to_login"
+            android:id="@+id/tvSwitchToLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/activity_register_switch_to_login">
+            android:text="@string/tvSwitchToLogin">
 
         </TextView>
 

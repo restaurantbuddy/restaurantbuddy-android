@@ -1,5 +1,6 @@
 package net.samuelcmace.restaurantbuddyandroid.gui.main.cart
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -21,7 +22,7 @@ import net.samuelcmace.restaurantbuddyandroid.service.CustomerService
  */
 class CartItemAdapter(private val context: Context) : RecyclerView.Adapter<CartItemAdapter.CartItemHolder>() {
 
-    private lateinit var mCustomerService: CustomerService
+    private var mCustomerService: CustomerService = CustomerService(context)
     private var items: List<Item> = ArrayList()
 
     /**
@@ -49,6 +50,7 @@ class CartItemAdapter(private val context: Context) : RecyclerView.Adapter<CartI
      * @param holder The item holder in question.
      * @param position The index that corresponds to the item in question.
      */
+    @SuppressLint("NotifyDataSetChanged")
     override fun onBindViewHolder(holder: CartItemHolder, position: Int) {
 
         holder.itemView.apply {
@@ -66,7 +68,8 @@ class CartItemAdapter(private val context: Context) : RecyclerView.Adapter<CartI
                 .setMessage("Would you like to delete the ${items[position].name} from your cart?")
                 .setPositiveButton("Yes") { _, _ ->
                     this.mCustomerService.removeItemFromCart(items[position])
-                    notifyItemChanged(position)
+                    notifyItemRemoved(position)
+                    notifyDataSetChanged()
                     Toast.makeText(
                         this.context,
                         "You deleted the ${items[position].name} from your shopping cart.",
@@ -90,6 +93,7 @@ class CartItemAdapter(private val context: Context) : RecyclerView.Adapter<CartI
      *
      * @param items The items to be assigned to the adapter upon initialization.
      */
+    @SuppressLint("NotifyDataSetChanged")
     fun setCartItems(items: List<Item>) {
         this.items = items
         notifyDataSetChanged()

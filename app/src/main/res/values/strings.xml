@@ -9,7 +9,7 @@
     <string name="activity_login_intro_textview">Enter a username and password to login:</string>
     <string name="activity_register_info_textview">Please complete the following fields to register:</string>
     <string name="activity_login_switch_to_register">Not yet a user? Click here to register.</string>
-    <string name="activity_register_switch_to_login">Already a user? Click here to login.</string>
+    <string name="tvSwitchToLogin">Already a user? Click here to login.</string>
     <string name="etFirstName">First Name</string>
     <string name="etLastName">Last Name</string>
     <string name="etEmailAddress">Email Address</string>
@@ -55,4 +55,6 @@
     <string name="activity_label_main">Menu</string>
     <string name="activity_label_register">Registrations</string>
     <string name="activity_label_login">Login</string>
+    <string name="btNext">Next</string>
+    <string name="btPrevious">Previous</string>
 </resources>

@@ -78,7 +78,7 @@ class RegisterActivity : AppCompatActivity() {
             switchFragment(this.mCurrentFragmentIndex + 1)
         }
 
-        this.mSwitchToLoginButton = findViewById(R.id.activity_register_switch_to_login)
+        this.mSwitchToLoginButton = findViewById(R.id.tvSwitchToLogin)
 
         this.mSwitchToLoginButton.setOnClickListener {
             this.startActivity(Intent(this, LoginActivity::class.java))
@@ -134,7 +134,7 @@ class RegisterActivity : AppCompatActivity() {
      */
     private fun updateFragmentGUI(newFragmentIndex: Int) {
         supportFragmentManager.commit {
-            replace(R.id.fragment_information_entry, mFragmentSet[newFragmentIndex]!!)
+            replace(R.id.fgRegisterInformationEntry, mFragmentSet[newFragmentIndex]!!)
             addToBackStack(null)
         }
         this.mCurrentFragmentIndex = newFragmentIndex
