@@ -122,7 +122,7 @@ class CartActivity : AppCompatActivity() {
      */
     private fun checkout() {
         this.mCustomerService.checkoutOrder({
-            Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, it.get("successMessage").toString(), Toast.LENGTH_SHORT).show()
             clearCart()
         }, {
             Toast.makeText(this, it, Toast.LENGTH_SHORT).show()

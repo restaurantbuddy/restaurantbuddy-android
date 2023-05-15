@@ -1,4 +1,4 @@
-package net.samuelcmace.restaurantbuddyandroid.gui.main.jsonmodel
+package net.samuelcmace.restaurantbuddyandroid.jsonmodel
 
 import kotlinx.serialization.Serializable
 import net.samuelcmace.restaurantbuddyandroid.database.entity.Item

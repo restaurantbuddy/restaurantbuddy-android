@@ -14,10 +14,9 @@ import net.samuelcmace.restaurantbuddyandroid.AppConfig
 import net.samuelcmace.restaurantbuddyandroid.R
 import net.samuelcmace.restaurantbuddyandroid.database.entity.Item
 import net.samuelcmace.restaurantbuddyandroid.gui.auth.LoginActivity
-import net.samuelcmace.restaurantbuddyandroid.gui.main.FeedbackActivity
 import net.samuelcmace.restaurantbuddyandroid.gui.main.LocationsActivity
 import net.samuelcmace.restaurantbuddyandroid.gui.main.cart.CartActivity
-import net.samuelcmace.restaurantbuddyandroid.gui.main.jsonmodel.ItemModelCollection
+import net.samuelcmace.restaurantbuddyandroid.jsonmodel.ItemModelCollection
 import net.samuelcmace.restaurantbuddyandroid.service.AuthenticationService
 import net.samuelcmace.restaurantbuddyandroid.service.CustomerService
 
@@ -102,6 +101,7 @@ class MainActivity : AppCompatActivity() {
      * @return A boolean containing the result of the menu item selection process.
      */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
         when (item.itemId) {
 
             R.id.itCart -> {
@@ -112,16 +112,14 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, LocationsActivity::class.java))
             }
 
-            R.id.itFeedback -> {
-                startActivity(Intent(this, FeedbackActivity::class.java))
-            }
-
             R.id.itLogout -> {
                 logout()
             }
 
         }
+
         return super.onOptionsItemSelected(item)
+
     }
 
     /**

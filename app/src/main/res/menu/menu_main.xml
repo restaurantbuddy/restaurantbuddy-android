@@ -15,12 +15,6 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/itFeedback"
-        android:icon="@drawable/icon_feedback"
-        android:title="@string/itFeedback"
-        app:showAsAction="ifRoom" />
-
-    <item
         android:id="@+id/itLogout"
         android:icon="@drawable/icon_logout"
         android:title="@string/itLogout"

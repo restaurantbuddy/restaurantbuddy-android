@@ -20,7 +20,7 @@ import kotlinx.serialization.json.Json
 import net.samuelcmace.restaurantbuddyandroid.BuildConfig
 import net.samuelcmace.restaurantbuddyandroid.R
 import net.samuelcmace.restaurantbuddyandroid.databinding.ActivityLocationsBinding
-import net.samuelcmace.restaurantbuddyandroid.gui.main.jsonmodel.LocationModelCollection
+import net.samuelcmace.restaurantbuddyandroid.jsonmodel.LocationModelCollection
 import net.samuelcmace.restaurantbuddyandroid.service.LocationService
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
