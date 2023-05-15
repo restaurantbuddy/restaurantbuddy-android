@@ -4,7 +4,14 @@
 
     <item
         android:id="@+id/itClearCart"
+        android:icon="@drawable/icon_delete"
         android:title="@string/itClearCart"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/itCheckout"
+        android:icon="@drawable/icon_checkout"
+        android:title="@string/itBack"
         app:showAsAction="ifRoom" />
 
     <item

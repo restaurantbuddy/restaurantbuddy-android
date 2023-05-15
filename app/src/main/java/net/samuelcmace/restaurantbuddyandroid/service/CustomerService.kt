@@ -38,6 +38,30 @@ class CustomerService(context: Context) : Service(context) {
     }
 
     /**
+     * Method called to check out the items in the shopping cart.
+     *
+     * @param onSuccess A lambda function containing code to be executed after a successful API request.
+     * @param onError A lambda function containing code to be executed after a failed API request.
+     */
+    fun checkoutOrder(onSuccess: (response: JSONObject) -> Unit, onError: (errorMessage: String) -> Unit) {
+
+        val url = "${AppConfig.getServerUrl()}/customer/order"
+        val arrayListItems = ArrayList<Int>()
+
+        runBlocking {
+            for (item in mItemDao.getAll()) {
+                item.dbId?.let { arrayListItems.add(it) }
+            }
+        }
+
+        val jsonRequest = JSONObject()
+        jsonRequest.put("menuItems", arrayListItems)
+
+        authenticatedJSONRequest(url, Method.POST, jsonRequest, onSuccess, onError)
+
+    }
+
+    /**
      * Method called to store a menu item from the API in the cart (implemented in the Room database).
      *
      * @param item The item to be stored in the cart.
@@ -73,8 +97,8 @@ class CustomerService(context: Context) : Service(context) {
      *
      * @return A set containing the items in the cart.
      */
-    fun getCartItems(): List<Item> {
-        var data: List<Item> = ArrayList()
+    fun getCartItems(): MutableList<Item> {
+        var data: MutableList<Item>
         runBlocking {
             data = mItemDao.getAll()
         }

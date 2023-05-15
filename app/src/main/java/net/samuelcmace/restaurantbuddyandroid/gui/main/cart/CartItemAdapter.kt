@@ -2,6 +2,7 @@ package net.samuelcmace.restaurantbuddyandroid.gui.main.cart
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +24,7 @@ import net.samuelcmace.restaurantbuddyandroid.service.CustomerService
 class CartItemAdapter(private val context: Context) : RecyclerView.Adapter<CartItemAdapter.CartItemHolder>() {
 
     private var mCustomerService: CustomerService = CustomerService(context)
-    private var items: List<Item> = ArrayList()
+    private var items: MutableList<Item> = ArrayList()
 
     /**
      * Method called by the Android API after the view has been created.
@@ -50,7 +51,6 @@ class CartItemAdapter(private val context: Context) : RecyclerView.Adapter<CartI
      * @param holder The item holder in question.
      * @param position The index that corresponds to the item in question.
      */
-    @SuppressLint("NotifyDataSetChanged")
     override fun onBindViewHolder(holder: CartItemHolder, position: Int) {
 
         holder.itemView.apply {
@@ -67,19 +67,19 @@ class CartItemAdapter(private val context: Context) : RecyclerView.Adapter<CartI
                 .setTitle("Deletion Confirmation")
                 .setMessage("Would you like to delete the ${items[position].name} from your cart?")
                 .setPositiveButton("Yes") { _, _ ->
-                    this.mCustomerService.removeItemFromCart(items[position])
-                    notifyItemRemoved(position)
-                    notifyDataSetChanged()
+                    val itemName = items[position].name
+                    removeItemFromCart(position)
                     Toast.makeText(
                         this.context,
-                        "You deleted the ${items[position].name} from your shopping cart.",
+                        "You deleted the $itemName from your shopping cart.",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
                 .setNegativeButton("No") { _, _ ->
+                    val itemName = items[position].name
                     Toast.makeText(
                         this.context,
-                        "You refrained from deleting the ${items[position].name} from your shopping cart.",
+                        "You refrained from deleting the $itemName from your shopping cart.",
                         Toast.LENGTH_SHORT
                     ).show()
                 }.create().show()
@@ -89,12 +89,22 @@ class CartItemAdapter(private val context: Context) : RecyclerView.Adapter<CartI
     }
 
     /**
+     * Method to remove an item from the shopping cart by position.
+     * @param position The index corresponding to the item in the mutable list.
+     */
+    private fun removeItemFromCart(position: Int) {
+        this.mCustomerService.removeItemFromCart(items[position])
+        this.items.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
+    /**
      * Method called to set the active items in the cart.
      *
      * @param items The items to be assigned to the adapter upon initialization.
      */
     @SuppressLint("NotifyDataSetChanged")
-    fun setCartItems(items: List<Item>) {
+    fun setCartItems(items: MutableList<Item>) {
         this.items = items
         notifyDataSetChanged()
     }

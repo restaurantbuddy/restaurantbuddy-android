@@ -18,7 +18,7 @@ interface ItemDao {
      * @return A list of the items retrieved from the database.
      */
     @Query("SELECT * FROM ITEM")
-    suspend fun getAll(): List<Item>
+    suspend fun getAll(): MutableList<Item>
 
     /**
      * Method to insert (or persist) a new ITEM into the database.

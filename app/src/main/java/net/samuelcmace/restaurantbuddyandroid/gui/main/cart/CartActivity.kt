@@ -62,6 +62,7 @@ class CartActivity : AppCompatActivity() {
      * @param item The menu item selected.
      */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
         when (item.itemId) {
 
             R.id.itClearCart -> {
@@ -87,12 +88,45 @@ class CartActivity : AppCompatActivity() {
 
             }
 
+            R.id.itCheckout -> {
+
+                AlertDialog.Builder(this)
+                    .setTitle("Checkout Confirmation")
+                    .setMessage("Would you like to checkout now?")
+                    .setPositiveButton("Yes") { _, _ ->
+                        checkout()
+                    }
+                    .setNegativeButton("No") { _, _ ->
+                        Toast.makeText(
+                            this,
+                            "You refrained from checking out.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }.create().show()
+
+            }
+
             R.id.itBack -> {
                 finish()
             }
 
         }
+
         return super.onOptionsItemSelected(item)
+
+    }
+
+    /**
+     * Method to check out the items currently in the shopping cart. If the operation succeeds, then clear the shopping
+     * cart. Otherwise, display the error message to the user.
+     */
+    private fun checkout() {
+        this.mCustomerService.checkoutOrder({
+            Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
+            clearCart()
+        }, {
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+        })
     }
 
     /**
