@@ -145,12 +145,12 @@ class RegisterActivity : AppCompatActivity() {
             }
 
             3 -> {
-                this.mNextButton.text = getString(R.string.signup)
+                this.mNextButton.text = getString(R.string.activity_label_register)
             }
 
             else -> {
                 this.mPreviousButton.isEnabled = true
-                this.mNextButton.text = getString(R.string.next)
+                this.mNextButton.text = getString(R.string.btNext)
             }
         }
     }

@@ -34,7 +34,7 @@
             android:id="@+id/tvRegisterInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/activity_register_info_textview" />
+            android:text="@string/tvRegisterInfo" />
 
         <FrameLayout
             android:id="@+id/fgRegisterInformationEntry"
@@ -52,14 +52,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="25dp"
-                android:text="@string/btPrevious" />
+                android:text="@string/btPrevious"
+                tools:ignore="ButtonStyle" />
 
             <Button
                 android:id="@+id/btNext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="25dp"
-                android:text="@string/btNext" />
+                android:text="@string/btNext"
+                tools:ignore="ButtonStyle" />
 
         </LinearLayout>
 

@@ -54,12 +54,12 @@ class LoginActivity : AppCompatActivity() {
 
         this.mAuthenticationService = AuthenticationService(this)
 
-        this.mUsernameTextEdit = findViewById(R.id.activity_login_username_edittext)
-        this.mPasswordEditText = findViewById(R.id.activity_login_password_edittext)
+        this.mUsernameTextEdit = findViewById(R.id.etUsername)
+        this.mPasswordEditText = findViewById(R.id.etPassword)
 
-        this.mLoginButton = findViewById(R.id.activity_login_button)
+        this.mLoginButton = findViewById(R.id.btLogin)
 
-        this.mSwitchToRegister = findViewById(R.id.activity_login_switch_to_register)
+        this.mSwitchToRegister = findViewById(R.id.tvSwitchToRegister)
 
         this.mLoginButton.setOnClickListener {
             mAuthenticationService.login(mUsernameTextEdit.text.toString(), mPasswordEditText.text.toString(), {
